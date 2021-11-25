@@ -35,7 +35,7 @@ namespace GraphTheory
 
             foreach (Edge i in list)
             {
-                if (reversedCoord.ToString() == i.ToString())
+                if (reversedCoord.X == i.X && reversedCoord.Y == i.Y)
                 {
                     return true;
                 }

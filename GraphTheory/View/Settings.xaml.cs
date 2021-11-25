@@ -33,22 +33,22 @@ namespace GraphTheory.View
             List<Edge> list = new List<Edge>();
             int counter = 0;
 
-            while (list.Count < Settings.N)
+            while (list.Count < N)
             {
                 var random = new Random();
                 Edge tempP = new Edge
                 {
 
                     X = counter,
-                    Y = random.Next(Settings.N),
-                    Value = random.Next(1, Settings.N)
+                    Y = random.Next(N),
+                    Value = random.Next(1, N)
                 };
                 if (!tempP.XEqualsY() && !tempP.IsNewCoordADuplicate(list))
                 {
                     list.Add(tempP);
                     counter++;
                 }
-                if (tempP.X == Settings.N - 1 && tempP.Y != 0 && tempP.IsNewCoordADuplicate(list))
+                if (tempP.X == N - 1 && tempP.Y != 0 && tempP.IsNewCoordADuplicate(list))
                 {
                     counter = 0;
                 }
@@ -58,10 +58,9 @@ namespace GraphTheory.View
 
         public void AddEdgebtn_Click(object sender, RoutedEventArgs e)
         {
-            // Trace.WriteLine(ListView.Items.Count);
+            // //Trace.WriteLine(ListView.Items.Count);
             if (ListView.Items.Count < (int.Parse(NodesCounterCB.Text) - 1) * int.Parse(NodesCounterCB.Text) / 2) //(n-1)*n/2
             {
-                
                 bool foundEdge = false;
                 Random random = new Random();
 
@@ -74,7 +73,6 @@ namespace GraphTheory.View
                     };
                     if (!tempP.XEqualsY() && !tempP.IsNewCoordADuplicate(edgeList))
                     {
-                        
                         edgeList.Add(tempP);
                         foundEdge = true;
                     }
@@ -89,7 +87,7 @@ namespace GraphTheory.View
 
         private void EditEdgebtn_Click(object sender, RoutedEventArgs e)
         {
-            Trace.WriteLine(selectedEdge);
+            //Trace.WriteLine(selectedEdge);
 
             if (int.TryParse(TxtBoxX.Text, out _) && int.TryParse(TxtBoxY.Text, out _))
             {
@@ -101,19 +99,21 @@ namespace GraphTheory.View
                         Y = int.Parse(TxtBoxY.Text),
                         Value = int.Parse(TxtBoxValue.Text)
                     };
-                    if (tempP.X == selectedEdge.X && tempP.Y == selectedEdge.Y)
+                    if (tempP.X == selectedEdge.X && tempP.Y == selectedEdge.Y) // Ha csak a "value" változik
                     {
-                        
-                        
+                        edgeList.Find(p => p.X == tempP.X && p.Y == tempP.Y).Value = tempP.Value;
                     }
-                    else if (!tempP.XEqualsY() && !tempP.IsNewCoordADuplicate(edgeList))
+                    else if (!tempP.XEqualsY() && !tempP.IsNewCoordADuplicate(edgeList)) // Ha "X" vagy "Y" (is) változik
                     {
-                       
+                        int index = edgeList.FindIndex(p => p.X == selectedEdge.X && p.Y == selectedEdge.Y);
+                        edgeList[index] = tempP;
+
                     }
                     else
                     {
                         MessageBox.Show("Ugyan az az x és y érték, vagy szerepel már ilyen út a gráfban.");
                     }
+                    ListView.Items.Refresh();
                 }
                 else
                 {
@@ -128,12 +128,48 @@ namespace GraphTheory.View
 
         }
 
+        private void RemoveEdgebtn_Click(object sender, RoutedEventArgs e)
+        {
+            int index = edgeList.FindIndex(p => p.X == selectedEdge.X && p.Y == selectedEdge.Y);
+            edgeList.RemoveAt(index);
+            ListView.Items.Refresh();
+        }
+
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedEdge = (Edge)ListView.SelectedItem;
-            TxtBoxValue.Text = selectedEdge.Value.ToString();
-            TxtBoxX.Text = selectedEdge.X.ToString();
-            TxtBoxY.Text = selectedEdge.Y.ToString();
+            if(selectedEdge != null)
+            {
+                TxtBoxValue.Text = selectedEdge.Value.ToString();
+                TxtBoxX.Text = selectedEdge.X.ToString();
+                TxtBoxY.Text = selectedEdge.Y.ToString();
+            }
+        }
+
+        private void NodesCounterCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string NodesCounterCBText = (e.AddedItems[0] as ComboBoxItem).Content as string;
+           
+            if (int.Parse(NodesCounterCBText) < N)
+            {
+                N = int.Parse(NodesCounterCBText);
+                List<Edge> newEdgeList = CreateRandomEdges();
+                //Trace.WriteLine("Settings: ");
+                foreach (Edge edge in Settings.edgeList)
+                {
+                    //Trace.WriteLine(edge.ToString());
+                }
+                edgeList = newEdgeList;
+            }
+            else if (int.Parse(NodesCounterCBText) > N)
+            {
+                N = int.Parse(NodesCounterCBText);
+            }
+            if(ListView != null)
+            {
+                ListView.ItemsSource = edgeList;
+                ListView.Items.Refresh();
+            }
         }
     }
 }

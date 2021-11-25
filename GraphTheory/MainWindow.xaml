@@ -31,114 +31,130 @@
         <Button Content="Kruskal algoritmus" Style="{StaticResource btnGray}" x:Name="Kruskalbtn" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Kruskalbtn_Click" Width="137"/>
         <Button Content="Dijkstra algoritmus" Style="{StaticResource btnGray}" x:Name="Dijkstrabtn" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Dijkstrabtn_Click" Width="137"/>
 
-        <Button Content="Algoritmus" Style="{StaticResource btnGray}" x:Name="BFSAlgBtn" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137"/>
+        <Button Content="Algoritmus" Style="{StaticResource btnGray}" x:Name="BFSAlgBtn" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Width="137" Click="BFSAlgBtn_Click"/>
 
         <Button Content="Gráf beállítások" Style="{StaticResource btnGray}" x:Name="SettingsBtn" Grid.Column="8" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsBtn_Click" Width="137"/>
         <Button Content="Kilépés" Style="{StaticResource btnGray}" x:Name="ExitBtn" Grid.Column="8" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="137" Click="ExitBtn_Click"/>
 
         <Canvas x:Name="GraphDisplayFrame" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="7" Grid.RowSpan="4">
-            <!-- Do not add properties to Ellipses -->
-            <Ellipse
-                x:Name="ellipse0"
-                Visibility="Visible"
-                Width="40"
-                Height="40"
-                Stroke="Black"
-                Fill="Wheat"
-                StrokeThickness="2"
-                Canvas.Left="478"
-                Canvas.Top="30" 
-                Panel.ZIndex="1"
-                />
-            <Ellipse
-                x:Name="ellipse1"
-                Visibility="Visible"
-                Width="40"
-                Height="40"
-                Stroke="Black"
-                Fill="Wheat"
-                StrokeThickness="2"
-                Canvas.Left="67"
-                Canvas.Top="109"
-                Panel.ZIndex="1"/>
-
-            <Ellipse
-                x:Name="ellipse2"
-                Visibility="Visible"
-                Width="40"
-                Height="40"
-                Stroke="Black"
-                Fill="Wheat"
-                StrokeThickness="2"
-                Canvas.Left="998"
-                Canvas.Top="50"
-                Panel.ZIndex="1"/>
-            <Ellipse
-                x:Name="ellipse3"
-                Visibility="Visible"
-                Width="40"
-                Height="40"
-                Stroke="Black"
-                Fill="Wheat"
-                StrokeThickness="2"
-                Canvas.Left="313"
-                Canvas.Top="183"
-                Panel.ZIndex="1"/>
-            <Ellipse
-                x:Name="ellipse4"
-                Visibility="Visible"
-                Width="40"
-                Height="40"
-                Stroke="Black"
-                Fill="Wheat"
-                StrokeThickness="2"
-                Canvas.Left="721"
-                Canvas.Top="163"
-                Panel.ZIndex="1"/>
-            <Ellipse
-                x:Name="ellipse5"
-                Visibility="Visible"
-                Width="40"
-                Height="40"
-                Stroke="Black"
-                Fill="Wheat"
-                StrokeThickness="2"
-                Canvas.Left="610"
-                Canvas.Top="374"
-                Panel.ZIndex="1"/>
-            <Ellipse
-                x:Name="ellipse6"
-                Visibility="Visible"
-                Width="40"
-                Height="40"
-                Stroke="Black"
-                Fill="Wheat"
-                StrokeThickness="2"
-                Canvas.Left="148"
-                Canvas.Top="264"
-                Panel.ZIndex="1"/>
-            <Ellipse
-                x:Name="ellipse7"
-                Visibility="Visible"
-                Width="40"
-                Height="40"
-                Stroke="Black"
-                Fill="Wheat"
-                StrokeThickness="2"
-                Canvas.Left="931"
-                Canvas.Top="284"
-                Panel.ZIndex="1"/>
-            <Ellipse
-                x:Name="ellipse8"
-                Visibility="Visible"
-                Width="40"
-                Height="40"
-                Stroke="Black"
-                Fill="Wheat"
-                StrokeThickness="2"
-                Canvas.Left="345"
-                Canvas.Top="354"
-                Panel.ZIndex="1"/>
+            <!-- Do not add properties to Borders -->
+            <Border 
+                    Canvas.Left="478"
+                    Canvas.Top="30"
+                    Name="border0"
+                    Panel.ZIndex="2"
+                    CornerRadius="50"
+                    Width="40"
+                    Height="40"
+                    Background="Wheat"
+                    BorderBrush="Black"
+                    BorderThickness="2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="0" />
+            </Border>
+            <Border 
+                    Canvas.Left="67"
+                    Canvas.Top="109"
+                    Name="border1"
+                    Panel.ZIndex="2"
+                    CornerRadius="50"
+                    Width="40"
+                    Height="40"
+                    Background="Wheat"
+                    BorderBrush="Black"
+                    BorderThickness="2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="1" />
+            </Border>
+            <Border 
+                    Canvas.Left="998"
+                    Canvas.Top="50"
+                    Name="border2"
+                    Panel.ZIndex="2"
+                    CornerRadius="50"
+                    Width="40"
+                    Height="40"
+                    Background="Wheat"
+                    BorderBrush="Black"
+                    BorderThickness="2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="2" />
+            </Border>
+            <Border 
+                    Canvas.Left="313"
+                    Canvas.Top="183"
+                    Name="border3"
+                    Panel.ZIndex="2"
+                    CornerRadius="50"
+                    Width="40"
+                    Height="40"
+                    Background="Wheat"
+                    BorderBrush="Black"
+                    BorderThickness="2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="3" />
+            </Border>
+            <Border 
+                    Canvas.Left="721"
+                    Canvas.Top="163"
+                    Name="border4"
+                    Panel.ZIndex="2"
+                    CornerRadius="50"
+                    Width="40"
+                    Height="40"
+                    Background="Wheat"
+                    BorderBrush="Black"
+                    BorderThickness="2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="4" />
+            </Border>
+            <Border 
+                    Canvas.Left="610"
+                    Canvas.Top="374"
+                    Name="border5"
+                    Panel.ZIndex="2"
+                    CornerRadius="50"
+                    Width="40"
+                    Height="40"
+                    Background="Wheat"
+                    BorderBrush="Black"
+                    BorderThickness="2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="5" />
+            </Border>
+            <Border 
+                    Canvas.Left="148"
+                    Canvas.Top="264"
+                    Name="border6"
+                    Panel.ZIndex="2"
+                    CornerRadius="50"
+                    Width="40"
+                    Height="40"
+                    Background="Wheat"
+                    BorderBrush="Black"
+                    BorderThickness="2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="6" />
+            </Border>
+            <Border 
+                    Canvas.Left="931"
+                    Canvas.Top="284"
+                    Name="border7"
+                    Panel.ZIndex="2"
+                    CornerRadius="50"
+                    Width="40"
+                    Height="40"
+                    Background="Wheat"
+                    BorderBrush="Black"
+                    BorderThickness="2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="7" />
+            </Border>
+            <Border 
+                    Canvas.Left="345"
+                    Canvas.Top="354"
+                    Name="border8"
+                    Panel.ZIndex="2"
+                    CornerRadius="50"
+                    Width="40"
+                    Height="40"
+                    Background="Wheat"
+                    BorderBrush="Black"
+                    BorderThickness="2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="8" />
+            </Border>
         </Canvas>
     </Grid>
 </Window>

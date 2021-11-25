@@ -23,9 +23,7 @@
         </Grid.RowDefinitions>
         
         <Label x:Name="nodesCounterlbl" Width="100" Height="30" Grid.Column="0" Margin="0,0,6,45" Grid.Row="0" >Csúcsok száma:</Label>
-        <ComboBox x:Name="NodesCounterCB" Width="90" Height="30" Margin="0, 0, 10, 0" Grid.Column="0" Grid.Row="0" SelectedIndex="8">
-            <ComboBoxItem Name="cbi1">1</ComboBoxItem>
-            <ComboBoxItem Name="cbi2">2</ComboBoxItem>
+        <ComboBox x:Name="NodesCounterCB" Width="90" Height="30" Margin="0, 0, 10, 0" Grid.Column="0" Grid.Row="0" SelectedIndex="6" SelectionChanged="NodesCounterCB_SelectionChanged">
             <ComboBoxItem Name="cbi3">3</ComboBoxItem>
             <ComboBoxItem Name="cbi4">4</ComboBoxItem>
             <ComboBoxItem Name="cbi5">5</ComboBoxItem>
@@ -44,7 +42,7 @@
 
         <Button Content="Él hozzáadás" Style="{StaticResource btnGray}" x:Name="AddEdgebtn" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="106" Click="AddEdgebtn_Click"/>
         <Button Content="Él szerkesztés" Style="{StaticResource btnGray}" x:Name="EditEdgebtn" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="106" Click="EditEdgebtn_Click"/>
-        <Button Content="Él törlés" Style="{StaticResource btnGray}" x:Name="RemoveEdgebtn" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="106"/>
+        <Button Content="Él törlés" Style="{StaticResource btnGray}" x:Name="RemoveEdgebtn" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="106" Click="RemoveEdgebtn_Click"/>
 
 
         <ListView x:Name="ListView" Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="5" SelectionChanged="ListView_SelectionChanged">
