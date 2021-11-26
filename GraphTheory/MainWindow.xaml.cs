@@ -124,7 +124,11 @@ namespace GraphTheory
                 {
                     //Trace.WriteLine(objLine.Name);
                     GraphDisplayFrame.Children.Remove(objLine);
-                    
+                }
+                foreach (TextBlock txtBlock in FindVisualChildren<TextBlock>(GraphDisplayFrame))
+                {
+                    //Trace.WriteLine(objLine.Name);
+                    GraphDisplayFrame.Children.Remove(txtBlock);
                 }
                 i++;
             }
@@ -166,41 +170,66 @@ namespace GraphTheory
                     node2 = n;
                 }
             }
-            // objLine.Name = "Index" + edge.X.ToString();
-            //Trace.WriteLine(objLine.Name);
-
+            
             Panel.SetZIndex(objLine, 1);
             _ = GraphDisplayFrame.Children.Add(objLine);
 
             if (showValues)
             {
-                double a = Math.Abs(node1.X - node2.X);
-                double b = Math.Abs(node1.Y - node2.Y);
-                double angleInDegrees = Math.Atan2(a, b) * 180 / Math.PI;
-                Trace.WriteLine("a= " + a + " b= " + b + " angle= " + angleInDegrees);
-                double m1 = (node1.X + 20 + node2.X + 20) / 2;
-                double m2 = (node1.Y + 20 + node2.Y + 20) / 2;
+                DrawValuesToEdges(node1, node2, edge);
+            }
+        }
 
-                TextBox txtBox = new TextBox
+        private void DrawValuesToEdges(Edge node1, Edge node2, Edge edge)
+        {
+            double a = Math.Abs(node1.X - node2.X);
+            double b = Math.Abs(node1.Y - node2.Y);
+            double angleInDegrees = Math.Atan2(a, b) * 180 / Math.PI;
+            double m1 = (node1.X + 20 + node2.X + 20) / 2;
+            double m2 = (node1.Y + 20 + node2.Y + 20) / 2;
+
+            if (node1.X <= node2.X)
+            {
+                if (node1.Y > node2.Y)
                 {
-                    Name = "txtIndex" + edge.X.ToString(),
-                    Text = edge.Value.ToString(),
-                    BorderThickness = new Thickness(0, 0, 0, 0),
-                    FontWeight = FontWeights.Bold,
-                    RenderTransform = new RotateTransform { Angle = angleInDegrees-90 },
+                    angleInDegrees += 90;
+                }
+                else if (node1.Y <= node2.Y)
+                {
+                    angleInDegrees = 90 - angleInDegrees;
+                }
+            }
+            else if (node1.X >= node2.X)
+            {
+                if (node1.Y > node2.Y)
+                {
+                    angleInDegrees = 90 - angleInDegrees;
+                }
+                else if (node1.Y <= node2.Y)
+                {
+                    angleInDegrees += 270;
+                }
+            }
+            // Trace.WriteLine(node1.Value + "-" + node2.Value + " angle: " + angleInDegrees);
+            if (angleInDegrees > 90 && angleInDegrees < 270)
+            {
+                angleInDegrees -= 180;
+            }
+            TextBox txtBox = new TextBox
+            {
+                Name = "txtIndex" + edge.X.ToString(),
+                Text = edge.Value.ToString(),
+                BorderThickness = new Thickness(0, 0, 0, 0),
+                FontWeight = FontWeights.Bold,
+                RenderTransform = new RotateTransform { Angle = angleInDegrees },
+                IsReadOnly = true,
             };
 
-                
+            Panel.SetZIndex(txtBox, 0);
+            Canvas.SetLeft(txtBox, m1);
+            Canvas.SetTop(txtBox, m2);
 
-                Panel.SetZIndex(txtBox, 0);
-                Canvas.SetLeft(txtBox, m1);
-                Canvas.SetTop(txtBox, m2);
-
-                
-
-                _ = GraphDisplayFrame.Children.Add(txtBox);
-                
-            }
+            _ = GraphDisplayFrame.Children.Add(txtBox);
         }
 
         public List<Edge> GetNodeList()
@@ -260,6 +289,7 @@ namespace GraphTheory
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             Close();
+            settings.Close();
         }
 
         private void BFSAlgBtn_Click(object sender, RoutedEventArgs e)

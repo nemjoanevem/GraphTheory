@@ -78,8 +78,8 @@
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="2" />
             </Border>
             <Border 
-                    Canvas.Left="313"
-                    Canvas.Top="183"
+                    Canvas.Left="325"
+                    Canvas.Top="145"
                     Name="border3"
                     Panel.ZIndex="2"
                     CornerRadius="50"
@@ -91,8 +91,8 @@
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="3" />
             </Border>
             <Border 
-                    Canvas.Left="721"
-                    Canvas.Top="163"
+                    Canvas.Left="763"
+                    Canvas.Top="145"
                     Name="border4"
                     Panel.ZIndex="2"
                     CornerRadius="50"

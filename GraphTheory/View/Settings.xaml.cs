@@ -119,13 +119,11 @@ namespace GraphTheory.View
                 {
                     MessageBox.Show("Nem jó a csúcs érték. (nagyobb mint a max)");
                 }
-
             }
             else
             {
                 MessageBox.Show("Nem jó a csúcs érték. (nem szám)");
             }
-
         }
 
         private void RemoveEdgebtn_Click(object sender, RoutedEventArgs e)
@@ -133,6 +131,12 @@ namespace GraphTheory.View
             int index = edgeList.FindIndex(p => p.X == selectedEdge.X && p.Y == selectedEdge.Y);
             edgeList.RemoveAt(index);
             ListView.Items.Refresh();
+        }
+
+
+        private void Backbtn_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

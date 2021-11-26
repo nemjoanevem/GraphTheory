@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphTheory.View"
         mc:Ignorable="d"
-        Title="Gráf beállítások" Height="450" Width="600" ResizeMode="NoResize">
+        Title="Gráf beállítások" Height="450" Width="600" ResizeMode="NoResize" WindowStyle="None">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -21,7 +21,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        
+
         <Label x:Name="nodesCounterlbl" Width="100" Height="30" Grid.Column="0" Margin="0,0,6,45" Grid.Row="0" >Csúcsok száma:</Label>
         <ComboBox x:Name="NodesCounterCB" Width="90" Height="30" Margin="0, 0, 10, 0" Grid.Column="0" Grid.Row="0" SelectedIndex="6" SelectionChanged="NodesCounterCB_SelectionChanged">
             <ComboBoxItem Name="cbi3">3</ComboBoxItem>
@@ -32,7 +32,7 @@
             <ComboBoxItem Name="cbi8">8</ComboBoxItem>
             <ComboBoxItem Name="cbi9">9</ComboBoxItem>
         </ComboBox>
-        
+
         <TextBox x:Name="TxtBoxX" Grid.Row="0" Grid.Column="3" Height="25" Margin="10, 0, 10, 40"/>
         <TextBox x:Name="TxtBoxY" Grid.Row="0" Grid.Column="3" Height="25" Margin="10, 40, 10, 00"/>
         <TextBox x:Name="TxtBoxValue" Grid.Row="1" Grid.Column="3" Height="25" Margin="10, 0, 10, 52"/>
@@ -40,10 +40,10 @@
         <Label x:Name="lblY" Grid.Row="0" Grid.Column="2" Width="50" Height="25" Margin="0, 36, 0, 0" HorizontalAlignment="Right">Y érték:</Label>
         <Label x:Name="lblValue" Grid.Row="1" Grid.Column="2" Width="35" Height="25" Margin="0, 0, 0, 56" HorizontalAlignment="Right">Súly:</Label>
 
-        <Button Content="Él hozzáadás" Style="{StaticResource btnGray}" x:Name="AddEdgebtn" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="106" Click="AddEdgebtn_Click"/>
-        <Button Content="Él szerkesztés" Style="{StaticResource btnGray}" x:Name="EditEdgebtn" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="106" Click="EditEdgebtn_Click"/>
-        <Button Content="Él törlés" Style="{StaticResource btnGray}" x:Name="RemoveEdgebtn" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="106" Click="RemoveEdgebtn_Click"/>
-
+        <Button Content="Él hozzáadás" Style="{StaticResource btnGray}" x:Name="AddEdgebtn" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="106" Click="AddEdgebtn_Click" Margin="0,7,0,0"/>
+        <Button Content="Él szerkesztés" Style="{StaticResource btnGray}" x:Name="EditEdgebtn" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="106" Click="EditEdgebtn_Click" Margin="0,0,0,7"/>
+        <Button Content="Él törlés" Style="{StaticResource btnGray}" x:Name="RemoveEdgebtn" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="106" Click="RemoveEdgebtn_Click" Margin="0,7,0,0"/>
+        <Button Content="Vissza" Style="{StaticResource btnGray}" x:Name="Backbtn" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="106" Margin="0,0,0,7" Click="Backbtn_Click"/>
 
         <ListView x:Name="ListView" Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="5" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
@@ -54,5 +54,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        
     </Grid>
 </Window>
