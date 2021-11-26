@@ -15,7 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using GraphTheory.View;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using GraphTheory.Algorithms;
@@ -29,19 +28,22 @@ namespace GraphTheory
     {
         public static int[,] graph;
         public static bool showValues = true;
-        private Settings settings = new Settings();
+        private readonly Settings settings = new Settings();
         public List<Edge> nodeList = new List<Edge>();
-        
+
+
+
         public MainWindow()
         {
             int latestN = Settings.N;
-            // DataContext = this;
             InitializeComponent();
             nodeList = GetNodeList();
             DrawLines();
 
+
             settings.AddEdgebtn.Click += delegate
             {
+                settings.EdgesCount = Settings.edgeList.Count();
                 Edge lastEdge = Settings.edgeList.Last();
                 DrawLine(lastEdge);
             };
@@ -55,6 +57,7 @@ namespace GraphTheory
 
             settings.RemoveEdgebtn.Click += delegate
             {
+                settings.EdgesCount = Settings.edgeList.Count();
                 ClearLines();
                 DrawLines();
                 // Vagy csak azt a vonalat töröljük
@@ -69,15 +72,12 @@ namespace GraphTheory
                 else if(latestN > Settings.N)
                 {
                     //Trace.WriteLine("MainWindow: ");
-                    foreach(Edge e in Settings.edgeList)
-                    {
-                        //Trace.WriteLine(e.ToString());
-                    }
                     HideORShowNodes(Settings.N);
                     latestN = Settings.N;
                     ClearLines();
                     DrawLines();
                 }
+                settings.EdgesCount = Settings.edgeList.Count();
             };
         }
 
@@ -261,6 +261,11 @@ namespace GraphTheory
             }
         }
 
+        private void ShowAlgorithm(List<int> nodeIndices)
+        {
+
+        }
+
         private void DFSbtn_Click(object sender, RoutedEventArgs e)
         {
             
@@ -297,8 +302,9 @@ namespace GraphTheory
             FillGraph();
             BFS bfs = new BFS();
             bfs.BreadthFirstSearch();
+            ShowAlgorithm(bfs.nodeIndices);
         }
     }
 
-    
+
 }

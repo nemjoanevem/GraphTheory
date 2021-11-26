@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,20 +13,32 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace GraphTheory.View
+namespace GraphTheory
 {
     /// <summary>
     /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class Settings : Window
+    public partial class Settings : Window, INotifyPropertyChanged
     {
         public static int N = 9;
         public static List<Edge> edgeList = CreateRandomEdges();
         private Edge selectedEdge;
 
+        private object _EdgesCount = "Élek száma: 9";
+        public object EdgesCount
+        {
+            get { return _EdgesCount; }
+            set
+            {
+                _EdgesCount = "Élek száma: " + value;
+                OnPropertyChanged();
+            }
+        }
+
         public Settings()
         {
             InitializeComponent();
+            DataContext = this;
             ListView.ItemsSource = edgeList;
         }
 
@@ -128,9 +142,12 @@ namespace GraphTheory.View
 
         private void RemoveEdgebtn_Click(object sender, RoutedEventArgs e)
         {
-            int index = edgeList.FindIndex(p => p.X == selectedEdge.X && p.Y == selectedEdge.Y);
-            edgeList.RemoveAt(index);
-            ListView.Items.Refresh();
+            if (selectedEdge != null)
+            {
+                int index = edgeList.FindIndex(p => p.X == selectedEdge.X && p.Y == selectedEdge.Y);
+                edgeList.RemoveAt(index);
+                ListView.Items.Refresh();
+            }
         }
 
 
@@ -159,10 +176,6 @@ namespace GraphTheory.View
                 N = int.Parse(NodesCounterCBText);
                 List<Edge> newEdgeList = CreateRandomEdges();
                 //Trace.WriteLine("Settings: ");
-                foreach (Edge edge in Settings.edgeList)
-                {
-                    //Trace.WriteLine(edge.ToString());
-                }
                 edgeList = newEdgeList;
             }
             else if (int.Parse(NodesCounterCBText) > N)
@@ -173,6 +186,22 @@ namespace GraphTheory.View
             {
                 ListView.ItemsSource = edgeList;
                 ListView.Items.Refresh();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Raises this object's PropertyChanged event.
+        /// </summary>
+        /// <param name="propertyName">The property that has a new value.</param>
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                var e = new PropertyChangedEventArgs(propertyName);
+                handler(this, e);
             }
         }
     }

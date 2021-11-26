@@ -1,9 +1,8 @@
-﻿<Window x:Class="GraphTheory.View.Settings"
+﻿<Window x:Class="GraphTheory.Settings"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GraphTheory.View"
         mc:Ignorable="d"
         Title="Gráf beállítások" Height="450" Width="600" ResizeMode="NoResize" WindowStyle="None">
     <Grid>
@@ -32,6 +31,13 @@
             <ComboBoxItem Name="cbi8">8</ComboBoxItem>
             <ComboBoxItem Name="cbi9">9</ComboBoxItem>
         </ComboBox>
+
+        <Label Content="{Binding Path=EdgesCount}" 
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Bottom" 
+               Grid.Row="1"
+               Grid.Column="0"
+                />
 
         <TextBox x:Name="TxtBoxX" Grid.Row="0" Grid.Column="3" Height="25" Margin="10, 0, 10, 40"/>
         <TextBox x:Name="TxtBoxY" Grid.Row="0" Grid.Column="3" Height="25" Margin="10, 40, 10, 00"/>

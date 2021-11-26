@@ -19,5 +19,5 @@ C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\Graph
 C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\GraphTheory.pdb
 C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\GraphTheory.genruntimeconfig.cache
 C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\App.baml
-C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\View\Settings.g.cs
-C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\View\Settings.baml
+C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\Settings.g.cs
+C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\Settings.baml

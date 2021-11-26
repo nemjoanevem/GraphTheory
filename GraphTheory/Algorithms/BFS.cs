@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using GraphTheory.View;
 
 namespace GraphTheory.Algorithms
 {
     class BFS
-    {                            
-        List<int> nodeIndices = new List<int>(); // Ebben a listában tároljuk a meglévő csúcsok indexét
+    {
+        public readonly List<int> nodeIndices = new List<int>(); // Ebben a listában tároljuk a meglévő csúcsok indexét
         public void BreadthFirstSearch()
         {
             Trace.WriteLine("BreadthFirstSearch");
