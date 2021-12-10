@@ -47,7 +47,9 @@
                     Height="40"
                     Background="Wheat"
                     BorderBrush="Black"
-                    BorderThickness="2">
+                    BorderThickness="2"
+                    Visibility="Visible">
+                    
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="0" />
             </Border>
             <Border 
@@ -60,7 +62,8 @@
                     Height="40"
                     Background="Wheat"
                     BorderBrush="Black"
-                    BorderThickness="2">
+                    BorderThickness="2"
+                    Visibility="Visible">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="1" />
             </Border>
             <Border 
@@ -73,7 +76,8 @@
                     Height="40"
                     Background="Wheat"
                     BorderBrush="Black"
-                    BorderThickness="2">
+                    BorderThickness="2"
+                    Visibility="Visible">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="2" />
             </Border>
             <Border 
@@ -86,7 +90,8 @@
                     Height="40"
                     Background="Wheat"
                     BorderBrush="Black"
-                    BorderThickness="2">
+                    BorderThickness="2"
+                    Visibility="Visible">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="3" />
             </Border>
             <Border 
@@ -99,7 +104,8 @@
                     Height="40"
                     Background="Wheat"
                     BorderBrush="Black"
-                    BorderThickness="2">
+                    BorderThickness="2"
+                    Visibility="Visible">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="4" />
             </Border>
             <Border 
@@ -112,7 +118,8 @@
                     Height="40"
                     Background="Wheat"
                     BorderBrush="Black"
-                    BorderThickness="2">
+                    BorderThickness="2"
+                    Visibility="Visible">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="5" />
             </Border>
             <Border 
@@ -125,7 +132,8 @@
                     Height="40"
                     Background="Wheat"
                     BorderBrush="Black"
-                    BorderThickness="2">
+                    BorderThickness="2"
+                    Visibility="Visible">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="6" />
             </Border>
             <Border 
@@ -138,7 +146,8 @@
                     Height="40"
                     Background="Wheat"
                     BorderBrush="Black"
-                    BorderThickness="2">
+                    BorderThickness="2"
+                    Visibility="Visible">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="7" />
             </Border>
             <Border 
@@ -151,7 +160,8 @@
                     Height="40"
                     Background="Wheat"
                     BorderBrush="Black"
-                    BorderThickness="2">
+                    BorderThickness="2"
+                    Visibility="Visible">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="8" />
             </Border>
         </Canvas>

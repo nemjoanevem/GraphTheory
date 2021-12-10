@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace GraphTheory.Algorithms
+namespace GraphTheory
 {
-    class BFS
+    class Algorithms
     {
         public readonly List<int> nodeIndices = new List<int>(); // Ebben a listában tároljuk a meglévő csúcsok indexét
         public readonly List<string> lineIndices = new List<string>();
@@ -41,12 +41,12 @@ namespace GraphTheory.Algorithms
                 }
                 getX++;
             }
-            if(getX < nodeIndices.Count)
+            if (getX < nodeIndices.Count)
             {
                 lineIndices.Add(nodeIndices[getX].ToString() + lastY.ToString());
                 Trace.WriteLine("lastY = " + nodeIndices[getX - 1].ToString() + lastY.ToString());
             }
-            
+
 
             foreach (int n in nodeIndices)
             {

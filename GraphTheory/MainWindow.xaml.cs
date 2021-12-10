@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using GraphTheory.Algorithms;
+using System.Windows.Threading;
 
 namespace GraphTheory
 {
@@ -29,17 +30,17 @@ namespace GraphTheory
         public static int[,] graph;
         public static bool showValues = true;
         private readonly Settings settings = new Settings();
+        private DispatcherTimer timer;
         public List<Edge> nodeList = new List<Edge>();
-
-
+        private List<Line> lineList = new List<Line>();
 
         public MainWindow()
         {
             int latestN = Settings.N;
+            
             InitializeComponent();
             nodeList = GetNodeList();
             DrawLines();
-
 
             settings.AddEdgebtn.Click += delegate
             {
@@ -125,10 +126,10 @@ namespace GraphTheory
                     //Trace.WriteLine(objLine.Name);
                     GraphDisplayFrame.Children.Remove(objLine);
                 }
-                foreach (TextBlock txtBlock in FindVisualChildren<TextBlock>(GraphDisplayFrame))
+                foreach (TextBox txtBox in FindVisualChildren<TextBox>(GraphDisplayFrame))
                 {
-                    //Trace.WriteLine(objLine.Name);
-                    GraphDisplayFrame.Children.Remove(txtBlock);
+                    Trace.WriteLine(txtBox.Name);
+                    GraphDisplayFrame.Children.Remove(txtBox);
                 }
                 i++;
             }
@@ -138,6 +139,7 @@ namespace GraphTheory
 
         private void DrawLines()
         {
+            lineList.Clear();
             foreach (Edge e in Settings.edgeList)
             {
                 DrawLine(e);
@@ -170,9 +172,14 @@ namespace GraphTheory
                     node2 = n;
                 }
             }
+
+            objLine.Name = "line" + node1.Value.ToString() + node2.Value.ToString();
+
             
             Panel.SetZIndex(objLine, 1);
             _ = GraphDisplayFrame.Children.Add(objLine);
+
+            lineList.Add(objLine);
 
             if (showValues)
             {
@@ -239,15 +246,19 @@ namespace GraphTheory
             foreach (var border in FindVisualChildren<Border>(GraphDisplayFrame))
             {
                 List<MarkupProperty> properties = MarkupWriter.GetMarkupObjectFor(border).Properties.ToList();
-                Edge node = new Edge
+
+                if(border.Visibility == Visibility.Visible)
                 {
-                    X = int.Parse(properties[8].StringValue), // Canvas.left property
-                    Y = int.Parse(properties[9].StringValue), // Canvas.right property
-                    Value = border.Name[^1] - 48
-                };
-                if (NodeList.Count < Settings.N)
-                {
-                    NodeList.Add(node);
+                    Edge node = new Edge
+                    {
+                        X = int.Parse(properties[9].StringValue), // Canvas.left property
+                        Y = int.Parse(properties[10].StringValue), // Canvas.right property
+                        Value = border.Name[^1] - 48
+                    };
+                    if (NodeList.Count < Settings.N)
+                    {
+                        NodeList.Add(node);
+                    }
                 }
             }
             return NodeList;
@@ -259,11 +270,110 @@ namespace GraphTheory
             {
                 border.Visibility = border.Name[^1] - 48 < nodesCounter ? Visibility.Visible : Visibility.Hidden;
             }
+            nodeList = GetNodeList();
+        }
+        
+
+        private int orderX, orderCount;
+        private List<int> nodeOrder;
+        private List<string> lineOrder;
+        private void ShowAlgorithm(List<int> nodeIndices, List<string> lineIndices)
+        {
+            foreach(Line line in lineList)
+            {
+                SetLineStatus(line, 0);
+            }
+
+            for(int i=0; i<nodeList.Count; i++)
+            {
+                SetNodeStatus(i, 0);
+            }
+
+
+            nodeOrder = nodeIndices;
+            lineOrder = lineIndices;
+
+            timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            timer.Tick += Timer_Tick;
+
+            orderX = 0;
+            orderCount = nodeOrder.Count;
+            timer.Start();
         }
 
-        private void ShowAlgorithm(List<int> nodeIndices)
+        private void Timer_Tick(object sender, EventArgs e)
         {
+            if (orderX < nodeList.Count && orderX < orderCount)
+            {
+                SetNodeStatus(nodeOrder[orderX], 1);
+                if (orderX <= lineOrder.Count && orderX > 0)
+                {
+                    foreach (Line line in lineList)
+                    {
+                        int counter = 0;
+                        string lineCode = line.Name.Remove(0, 4);
+                        if (lineCode == lineOrder[orderX-1] || Reverse(lineCode) == lineOrder[orderX-1])
+                        {
+                            SetLineStatus(line, 1);
+                        }
+                        counter++;
+                    }
+                }
+            }
+            else
+            {
+                timer.Stop();
+            }
+            orderX++;
 
+        }
+
+        public static string Reverse(string s)
+        {
+            char[] charArray = s.ToCharArray();
+            Array.Reverse(charArray);
+            return new string(charArray);
+        }
+
+        private void SetLineStatus(Line line, int status)
+        {
+            if(status == 0)
+            {
+                line.Stroke = Brushes.Black;
+                line.Fill = Brushes.Black;
+            }
+            else if(status == 1)
+            {
+                line.Stroke = Brushes.Red;
+                line.Fill = Brushes.Red;
+            }
+        }
+
+        private void SetNodeStatus(int index, int status)
+        {
+            if (status == 0)
+            {
+                foreach (Border border in FindVisualChildren<Border>(GraphDisplayFrame))
+                {
+                    if(border.Name[^1] - 48 == index)
+                    {
+                        border.Background = Brushes.Wheat;
+                    }
+                }
+            }
+            else if (status == 1)
+            {
+                foreach (Border border in FindVisualChildren<Border>(GraphDisplayFrame))
+                {
+                    if (border.Name[^1] - 48 == index)
+                    {
+                        border.Background = Brushes.Red;
+                    }
+                }
+            }
         }
 
         private void DFSbtn_Click(object sender, RoutedEventArgs e)
@@ -300,9 +410,9 @@ namespace GraphTheory
         private void BFSAlgBtn_Click(object sender, RoutedEventArgs e)
         {
             FillGraph();
-            BFS bfs = new BFS();
+            Algorithms bfs = new Algorithms();
             bfs.BreadthFirstSearch();
-            ShowAlgorithm(bfs.nodeIndices);
+            ShowAlgorithm(bfs.nodeIndices, bfs.lineIndices);
         }
     }
 
