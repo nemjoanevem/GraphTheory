@@ -17,7 +17,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
-using GraphTheory.Algorithms;
 using System.Windows.Threading;
 
 namespace GraphTheory
@@ -32,7 +31,7 @@ namespace GraphTheory
         private readonly Settings settings = new Settings();
         private DispatcherTimer timer;
         public List<Edge> nodeList = new List<Edge>();
-        private List<Line> lineList = new List<Line>();
+        private readonly List<Line> lineList = new List<Line>();
 
         public MainWindow()
         {
@@ -114,6 +113,13 @@ namespace GraphTheory
                     }
                 }
             }
+        }
+
+        public static string Reverse(string s)
+        {
+            char[] charArray = s.ToCharArray();
+            Array.Reverse(charArray);
+            return new string(charArray);
         }
 
         private void ClearLines()
@@ -272,8 +278,23 @@ namespace GraphTheory
             }
             nodeList = GetNodeList();
         }
-        
 
+
+        /*
+         * Addot algoritmus kirajzolása
+         * Gomb lenyomást követően:
+         * 1. ShowAlgorithm:
+         *  - Minden node és line színét alapra állítja
+         *  - létrehozza a timer-t, és el is indítja azt a Timer_Tick függvénnyel
+         *  
+         * 2. Timer_Tick
+         *  - Timer-nél megadott időközönként ismétlődik (interval)
+         *  - Végig megy az edott algoritmus által kapott int lista minden elemén(ez a lista a node-ok elérésének sorrendje)
+         *  - beállítja az adott node-t pirosra, majd azt a line-t is amelyikkel eljutottunk oda
+         *  - Ha végig ért a listán, akkor leállítja a Timer-t
+         *  
+         *  3. SetLine- és SetNodeStatus függvények a színt állítják
+         */
         private int orderX, orderCount;
         private List<int> nodeOrder;
         private List<string> lineOrder;
@@ -313,13 +334,11 @@ namespace GraphTheory
                 {
                     foreach (Line line in lineList)
                     {
-                        int counter = 0;
                         string lineCode = line.Name.Remove(0, 4);
                         if (lineCode == lineOrder[orderX-1] || Reverse(lineCode) == lineOrder[orderX-1])
                         {
                             SetLineStatus(line, 1);
                         }
-                        counter++;
                     }
                 }
             }
@@ -329,13 +348,6 @@ namespace GraphTheory
             }
             orderX++;
 
-        }
-
-        public static string Reverse(string s)
-        {
-            char[] charArray = s.ToCharArray();
-            Array.Reverse(charArray);
-            return new string(charArray);
         }
 
         private void SetLineStatus(Line line, int status)
@@ -375,6 +387,10 @@ namespace GraphTheory
                 }
             }
         }
+        
+        /*
+         * Gombok
+         */
 
         private void DFSbtn_Click(object sender, RoutedEventArgs e)
         {
