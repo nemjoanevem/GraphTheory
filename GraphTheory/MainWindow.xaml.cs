@@ -24,7 +24,7 @@ namespace GraphTheory
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public static int[,] graph;
         public static bool showValues = true;
@@ -33,13 +33,27 @@ namespace GraphTheory
         public List<Edge> nodeList = new List<Edge>();
         private readonly List<Line> lineList = new List<Line>();
 
+        private string _CurrentLabel = "Mélységi keresés";
+        public string CurrentLabel
+        {
+            get { return _CurrentLabel; }
+            set
+            {
+                _CurrentLabel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        //private char[][] board = new char[9][];
+
         public MainWindow()
         {
             int latestN = Settings.N;
-            
             InitializeComponent();
+            DataContext = this;
             nodeList = GetNodeList();
             DrawLines();
+
 
             settings.AddEdgebtn.Click += delegate
             {
@@ -65,7 +79,7 @@ namespace GraphTheory
 
             settings.NodesCounterCB.SelectionChanged += delegate
             {
-                if(latestN < Settings.N){
+                if (latestN < Settings.N){
                     HideORShowNodes(Settings.N);
                     latestN = Settings.N;
                 }
@@ -134,7 +148,6 @@ namespace GraphTheory
                 }
                 foreach (TextBox txtBox in FindVisualChildren<TextBox>(GraphDisplayFrame))
                 {
-                    Trace.WriteLine(txtBox.Name);
                     GraphDisplayFrame.Children.Remove(txtBox);
                 }
                 i++;
@@ -279,9 +292,20 @@ namespace GraphTheory
             nodeList = GetNodeList();
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                var e = new PropertyChangedEventArgs(propertyName);
+                handler(this, e);
+            }
+        }
+
 
         /*
-         * Addot algoritmus kirajzolása
+         * Adott algoritmus kirajzolása
          * Gomb lenyomást követően:
          * 1. ShowAlgorithm:
          *  - Minden node és line színét alapra állítja
@@ -290,14 +314,21 @@ namespace GraphTheory
          * 2. Timer_Tick
          *  - Timer-nél megadott időközönként ismétlődik (interval)
          *  - Végig megy az edott algoritmus által kapott int lista minden elemén(ez a lista a node-ok elérésének sorrendje)
-         *  - beállítja az adott node-t pirosra, majd azt a line-t is amelyikkel eljutottunk oda
+         *  - beállítja az adott node-t pirosra, majd azt a line-t is amelyikkel eljutottunk oda*
          *  - Ha végig ért a listán, akkor leállítja a Timer-t
+         *  
+         *  *A lineOrder az egy string lista, minden eleme egy xy forma, x = kiinduló node, y = cél node, ezek a nevei az adott line-nak.
+         *   Úgy tudjuk, hogy melyik line-t kell beszínezni, hogy a line-ok neve linexy vagy lineyx formában van, ez által könnyen megkereshető.
+         *   A line-ok színezése egy tickkel később indul mint a node-oké, hogy követhetőbb legyen az ábra.
+         *   Ha a gráf nem összefüggő, akkor ha áttérünk egy nem összefüggő szakaszra, ott bekerül egy "break" a lineOrder-be
+         *   így fenn marad a követhető megjelenés.
          *  
          *  3. SetLine- és SetNodeStatus függvények a színt állítják
          */
-        private int orderX, orderCount;
+        private int orderX, orderCount, lineOrderX;
         private List<int> nodeOrder;
         private List<string> lineOrder;
+
         private void ShowAlgorithm(List<int> nodeIndices, List<string> lineIndices)
         {
             foreach(Line line in lineList)
@@ -310,7 +341,6 @@ namespace GraphTheory
                 SetNodeStatus(i, 0);
             }
 
-
             nodeOrder = nodeIndices;
             lineOrder = lineIndices;
 
@@ -321,6 +351,7 @@ namespace GraphTheory
             timer.Tick += Timer_Tick;
 
             orderX = 0;
+            lineOrderX = 0;
             orderCount = nodeOrder.Count;
             timer.Start();
         }
@@ -330,15 +361,20 @@ namespace GraphTheory
             if (orderX < nodeList.Count && orderX < orderCount)
             {
                 SetNodeStatus(nodeOrder[orderX], 1);
-                if (orderX <= lineOrder.Count && orderX > 0)
+
+                if (lineOrderX <= lineOrder.Count && orderX > 0)
                 {
-                    foreach (Line line in lineList)
+                    if (lineOrder[orderX - 1] != "break")
                     {
-                        string lineCode = line.Name.Remove(0, 4);
-                        if (lineCode == lineOrder[orderX-1] || Reverse(lineCode) == lineOrder[orderX-1])
+                        foreach (Line line in lineList)
                         {
-                            SetLineStatus(line, 1);
+                            string lineCode = line.Name.Remove(0, 4);
+                            if (lineCode == lineOrder[orderX - 1] || Reverse(lineCode) == lineOrder[orderX - 1])
+                            {
+                                SetLineStatus(line, 1);
+                            }
                         }
+                        lineOrderX++;
                     }
                 }
             }
@@ -387,6 +423,13 @@ namespace GraphTheory
                 }
             }
         }
+
+        private void ShowSelectedButtons(Button SelectedButton)
+        {
+            BFSAlgBtn.Visibility = Visibility.Hidden;
+            DFSAlgBtn.Visibility = Visibility.Hidden;
+            SelectedButton.Visibility = Visibility.Visible;
+        }
         
         /*
          * Gombok
@@ -394,12 +437,14 @@ namespace GraphTheory
 
         private void DFSbtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            ShowSelectedButtons(DFSAlgBtn);
+            CurrentLabel = "Mélységi keresés";
         }
 
         private void BFSbtn_Click(object sender, RoutedEventArgs e)
         {
-            BFSAlgBtn.Visibility = Visibility.Visible;
+            ShowSelectedButtons(BFSAlgBtn);
+            CurrentLabel = "Szélességi keresés";
         }
 
         private void Kruskalbtn_Click(object sender, RoutedEventArgs e)
@@ -423,14 +468,30 @@ namespace GraphTheory
             settings.Close();
         }
 
+        private void DFSSudoku_Click(object sender, RoutedEventArgs e)
+        {
+            DFSAlgBtn.Visibility = Visibility.Hidden;
+            GraphDisplayFrame.Visibility = Visibility.Hidden;
+            Inner.Visibility = Visibility.Visible;
+        }
+
         private void BFSAlgBtn_Click(object sender, RoutedEventArgs e)
         {
             FillGraph();
-            Algorithms bfs = new Algorithms();
-            bfs.BreadthFirstSearch();
-            ShowAlgorithm(bfs.nodeIndices, bfs.lineIndices);
+            Algorithms alg = new Algorithms();
+            alg.BreadthFirstSearch();
+            ShowAlgorithm(alg.nodeIndices, alg.lineIndices);
         }
-    }
 
+        private void DFSAlgBtn_Click(object sender, RoutedEventArgs e)
+        {
+            FillGraph();
+            Algorithms alg = new Algorithms();
+            //alg.DepthFirstSearch();
+            alg.DepthFirstSearch();
+            ShowAlgorithm(alg.nodeIndices, alg.lineIndices);
+        }
+
+    }
 
 }

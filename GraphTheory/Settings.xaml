@@ -32,9 +32,17 @@
             <ComboBoxItem Name="cbi9">9</ComboBoxItem>
         </ComboBox>
 
+        <Label Content="Élek száma: " 
+               HorizontalContentAlignment="Left"
+               VerticalContentAlignment="Bottom" 
+               Grid.Row="1"
+               Grid.Column="0"
+                />
+
         <Label Content="{Binding Path=EdgesCount}" 
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Bottom" 
+               Margin="25, 0, 0, 0"
                Grid.Row="1"
                Grid.Column="0"
                 />

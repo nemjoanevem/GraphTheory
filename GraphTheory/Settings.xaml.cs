@@ -24,13 +24,13 @@ namespace GraphTheory
         public static List<Edge> edgeList = CreateRandomEdges();
         private Edge selectedEdge;
 
-        private object _EdgesCount = "Élek száma: 9";
-        public object EdgesCount
+        private int _EdgesCount = 9;
+        public int EdgesCount
         {
             get { return _EdgesCount; }
             set
             {
-                _EdgesCount = "Élek száma: " + value;
+                _EdgesCount = value;
                 OnPropertyChanged();
             }
         }
@@ -91,6 +91,7 @@ namespace GraphTheory
                         foundEdge = true;
                     }
                 }
+
                 ListView.Items.Refresh();
             }
             else
