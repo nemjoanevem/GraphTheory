@@ -21,3 +21,5 @@ C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\Graph
 C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\App.baml
 C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\Settings.g.cs
 C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\Settings.baml
+C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\SudSettings.g.cs
+C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\SudSettings.baml

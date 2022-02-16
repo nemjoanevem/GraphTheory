@@ -34,6 +34,12 @@
         <Button Content="Algoritmus" Style="{StaticResource btnGray}" x:Name="DFSAlgBtn" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Width="137" Click="DFSAlgBtn_Click"/>
         <Button Content="Sudoku" Style="{StaticResource btnGray}" x:Name="DFSSudoku" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Width="137" Click="DFSSudoku_Click"/>
 
+        <Button Content="Megoldás" Style="{StaticResource btnGray}" x:Name="DFSSudSolve" Grid.Column="7" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="DFSSudSolve_Click"/>
+        <Button Content="Új generálása" Style="{StaticResource btnGray}" x:Name="DFSSudRand" Grid.Column="6" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="DFSSudRand_Click"/>
+
+        <Button Content="Vissza" Style="{StaticResource btnGray}" x:Name="DFSSudBack" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="DFSSudBack_Click"/>
+
+
         <Label Content="{Binding Path=CurrentLabel}" 
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Center" 
@@ -42,9 +48,10 @@
                 />
 
         <Button Content="Gráf beállítások" Style="{StaticResource btnGray}" x:Name="SettingsBtn" Grid.Column="8" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsBtn_Click" Width="137"/>
+        <Button Content="Sudoku beállítások" Style="{StaticResource btnGray}" x:Name="SudSettingsBtn" Grid.Column="8" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SudSettingsBtn_Click" Width="137" Visibility="Hidden"/>
         <Button Content="Kilépés" Style="{StaticResource btnGray}" x:Name="ExitBtn" Grid.Column="8" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="137" Click="ExitBtn_Click"/>
 
-        <Canvas x:Name="GraphDisplayFrame" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="7" Grid.RowSpan="4" Visibility="Hidden">
+        <Canvas x:Name="GraphDisplayFrame" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="7" Grid.RowSpan="4" Visibility="Visible">
             <!-- Do not add properties to Borders -->
             <Border 
                     Canvas.Left="478"
@@ -224,12 +231,573 @@
             <Border BorderThickness="0.5" BorderBrush="Black" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1"/>
             <Border BorderThickness="0.5" BorderBrush="Black" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1"/>
 
-            <Label Content="8" 
-               HorizontalContentAlignment="Center"
-               VerticalContentAlignment="Center" 
-               Grid.Row="2"
-               Grid.Column="2"
-                />
+            <Label Content='{Binding Path=BoardDisplay[0][0]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='1'
+Grid.Column='1'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[0][1]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='1'
+Grid.Column='2'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[0][2]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='1'
+Grid.Column='3'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[0][3]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='1'
+Grid.Column='4'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[0][4]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='1'
+Grid.Column='5'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[0][5]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='1'
+Grid.Column='6'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[0][6]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='1'
+Grid.Column='7'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[0][7]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='1'
+Grid.Column='8'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[0][8]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='1'
+Grid.Column='9'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[1][0]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='2'
+Grid.Column='1'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[1][1]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='2'
+Grid.Column='2'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[1][2]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='2'
+Grid.Column='3'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[1][3]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='2'
+Grid.Column='4'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[1][4]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='2'
+Grid.Column='5'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[1][5]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='2'
+Grid.Column='6'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[1][6]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='2'
+Grid.Column='7'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[1][7]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='2'
+Grid.Column='8'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[1][8]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='2'
+Grid.Column='9'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[2][0]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='3'
+Grid.Column='1'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[2][1]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='3'
+Grid.Column='2'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[2][2]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='3'
+Grid.Column='3'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[2][3]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='3'
+Grid.Column='4'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[2][4]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='3'
+Grid.Column='5'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[2][5]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='3'
+Grid.Column='6'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[2][6]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='3'
+Grid.Column='7'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[2][7]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='3'
+Grid.Column='8'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[2][8]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='3'
+Grid.Column='9'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[3][0]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='4'
+Grid.Column='1'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[3][1]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='4'
+Grid.Column='2'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[3][2]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='4'
+Grid.Column='3'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[3][3]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='4'
+Grid.Column='4'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[3][4]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='4'
+Grid.Column='5'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[3][5]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='4'
+Grid.Column='6'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[3][6]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='4'
+Grid.Column='7'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[3][7]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='4'
+Grid.Column='8'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[3][8]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='4'
+Grid.Column='9'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[4][0]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='5'
+Grid.Column='1'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[4][1]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='5'
+Grid.Column='2'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[4][2]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='5'
+Grid.Column='3'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[4][3]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='5'
+Grid.Column='4'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[4][4]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='5'
+Grid.Column='5'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[4][5]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='5'
+Grid.Column='6'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[4][6]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='5'
+Grid.Column='7'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[4][7]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='5'
+Grid.Column='8'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[4][8]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='5'
+Grid.Column='9'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[5][0]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='6'
+Grid.Column='1'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[5][1]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='6'
+Grid.Column='2'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[5][2]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='6'
+Grid.Column='3'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[5][3]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='6'
+Grid.Column='4'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[5][4]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='6'
+Grid.Column='5'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[5][5]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='6'
+Grid.Column='6'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[5][6]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='6'
+Grid.Column='7'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[5][7]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='6'
+Grid.Column='8'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[5][8]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='6'
+Grid.Column='9'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[6][0]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='7'
+Grid.Column='1'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[6][1]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='7'
+Grid.Column='2'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[6][2]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='7'
+Grid.Column='3'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[6][3]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='7'
+Grid.Column='4'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[6][4]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='7'
+Grid.Column='5'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[6][5]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='7'
+Grid.Column='6'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[6][6]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='7'
+Grid.Column='7'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[6][7]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='7'
+Grid.Column='8'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[6][8]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='7'
+Grid.Column='9'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[7][0]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='8'
+Grid.Column='1'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[7][1]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='8'
+Grid.Column='2'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[7][2]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='8'
+Grid.Column='3'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[7][3]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='8'
+Grid.Column='4'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[7][4]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='8'
+Grid.Column='5'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[7][5]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='8'
+Grid.Column='6'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[7][6]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='8'
+Grid.Column='7'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[7][7]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='8'
+Grid.Column='8'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[7][8]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='8'
+Grid.Column='9'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[8][0]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='9'
+Grid.Column='1'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[8][1]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='9'
+Grid.Column='2'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[8][2]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='9'
+Grid.Column='3'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[8][3]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='9'
+Grid.Column='4'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[8][4]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='9'
+Grid.Column='5'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[8][5]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='9'
+Grid.Column='6'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[8][6]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='9'
+Grid.Column='7'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[8][7]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='9'
+Grid.Column='8'
+/>
+
+            <Label Content='{Binding Path=BoardDisplay[8][8]}'
+HorizontalContentAlignment='Center'
+VerticalContentAlignment='Center'
+Grid.Row='9'
+Grid.Column='9'
+/>
+
         </Grid>
     </Grid>
 </Window>

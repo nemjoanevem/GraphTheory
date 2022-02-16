@@ -28,10 +28,12 @@ namespace GraphTheory
     {
         public static int[,] graph;
         public static bool showValues = true;
+        private readonly SudSettings sudSettings = new SudSettings();
         private readonly Settings settings = new Settings();
         private DispatcherTimer timer;
         public List<Edge> nodeList = new List<Edge>();
         private readonly List<Line> lineList = new List<Line>();
+        public static char[][] board = new char[9][];
 
         private string _CurrentLabel = "Mélységi keresés";
         public string CurrentLabel
@@ -40,6 +42,18 @@ namespace GraphTheory
             set
             {
                 _CurrentLabel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private char[][] _BoardDisplay = board;
+
+        public char[][] BoardDisplay
+        {
+            get { return _BoardDisplay; }
+            set
+            {
+                _BoardDisplay = value;
                 OnPropertyChanged();
             }
         }
@@ -92,6 +106,11 @@ namespace GraphTheory
                     DrawLines();
                 }
                 settings.EdgesCount = Settings.edgeList.Count();
+            };
+
+            sudSettings.Savebtn.Click += delegate
+            {
+                UpdateBoardDisplay();
             };
         }
 
@@ -428,12 +447,39 @@ namespace GraphTheory
         {
             BFSAlgBtn.Visibility = Visibility.Hidden;
             DFSAlgBtn.Visibility = Visibility.Hidden;
+            DFSSudSolve.Visibility = Visibility.Hidden;
+            DFSSudRand.Visibility = Visibility.Hidden;
             SelectedButton.Visibility = Visibility.Visible;
         }
+
+        private void SudokuButtons(Boolean show)
+        {
+            if (show)
+            {
+                Inner.Visibility = Visibility.Visible;
+                DFSSudRand.Visibility = Visibility.Visible;
+                DFSSudSolve.Visibility = Visibility.Visible;
+                DFSSudBack.Visibility = Visibility.Visible;
+                SudSettingsBtn.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Inner.Visibility = Visibility.Hidden;
+                DFSSudRand.Visibility = Visibility.Hidden;
+                DFSSudSolve.Visibility = Visibility.Hidden;
+                DFSSudBack.Visibility = Visibility.Hidden;
+                SudSettingsBtn.Visibility = Visibility.Hidden;
+            }
+            
+
+        }
+
+        private void UpdateBoardDisplay()
+        {
+            BoardDisplay = board;
+        }
         
-        /*
-         * Gombok
-         */
+        /*  ÁLTALÁNOS GOMBOK    */
 
         private void DFSbtn_Click(object sender, RoutedEventArgs e)
         {
@@ -466,14 +512,48 @@ namespace GraphTheory
         {
             Close();
             settings.Close();
+            sudSettings.Close();
+        }
+        /*  SUDOKU GOMBOK   */
+        private void SudSettingsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            sudSettings.FillSettingsBoard();
+            sudSettings.Show();
         }
 
         private void DFSSudoku_Click(object sender, RoutedEventArgs e)
         {
             DFSAlgBtn.Visibility = Visibility.Hidden;
             GraphDisplayFrame.Visibility = Visibility.Hidden;
-            Inner.Visibility = Visibility.Visible;
+
+            SudokuButtons(true);
+
+            Sudoku s = new Sudoku(9, 40);
+            s.FillValues();
+            UpdateBoardDisplay();
         }
+
+        private void DFSSudBack_Click(object sender, RoutedEventArgs e)
+        {
+            DFSAlgBtn.Visibility = Visibility.Visible;
+            GraphDisplayFrame.Visibility = Visibility.Visible;
+            SudokuButtons(false);
+        }
+
+        private void DFSSudRand_Click(object sender, RoutedEventArgs e)
+        {
+            Sudoku s = new Sudoku(9, 40);
+            s.FillValues();
+            UpdateBoardDisplay();
+        }
+
+        private void DFSSudSolve_Click(object sender, RoutedEventArgs e)
+        {
+            Sudoku.Solve();
+            UpdateBoardDisplay();
+        }
+
+        /*  ALGORITMUS GOMBOK   */
 
         private void BFSAlgBtn_Click(object sender, RoutedEventArgs e)
         {

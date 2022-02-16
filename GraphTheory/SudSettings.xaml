@@ -1,0 +1,243 @@
+﻿<Window x:Class="GraphTheory.SudSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GraphTheory"
+        mc:Ignorable="d"
+           Title="Sudoku beállítások" Height="450" Width="600" ResizeMode="NoResize" WindowStyle="None">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="120"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="Sudoku_Info" Height="30" Grid.Column="0" Margin="7,8,85,52" Grid.Row="0" Grid.ColumnSpan="4" >Adja meg a sudoku értékeit, figyeljen arra, hogy megoldható legyen!</Label>
+
+        <Grid x:Name="Inner" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="3" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border BorderThickness="2" BorderBrush="Black" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="9" Grid.RowSpan="9"/>
+            <Border BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+            <Border BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+            <Border BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+            <Border BorderThickness="1" BorderBrush="Black" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+            <Border BorderThickness="1" BorderBrush="Black" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+            <Border BorderThickness="1" BorderBrush="Black" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+            <Border BorderThickness="1" BorderBrush="Black" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+            <Border BorderThickness="1" BorderBrush="Black" Grid.Row="6" Grid.Column="6" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+            <Border BorderThickness="1" BorderBrush="Black" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+
+            <Border BorderThickness="0.5" BorderBrush="Black" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="9"/>
+            <Border BorderThickness="0.5" BorderBrush="Black" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1" Grid.RowSpan="9"/>
+            <Border BorderThickness="0.5" BorderBrush="Black" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="1" Grid.RowSpan="9"/>
+            <Border BorderThickness="0.5" BorderBrush="Black" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="1" Grid.RowSpan="9"/>
+            <Border BorderThickness="0.5" BorderBrush="Black" Grid.Row="0" Grid.Column="8" Grid.ColumnSpan="1" Grid.RowSpan="9"/>
+
+            <Border BorderThickness="0.5" BorderBrush="Black" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="9" Grid.RowSpan="1"/>
+            <Border BorderThickness="0.5" BorderBrush="Black" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="9" Grid.RowSpan="1"/>
+            <Border BorderThickness="0.5" BorderBrush="Black" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="9" Grid.RowSpan="1"/>
+            <Border BorderThickness="0.5" BorderBrush="Black" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="9" Grid.RowSpan="1"/>
+            <Border BorderThickness="0.5" BorderBrush="Black" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="9" Grid.RowSpan="1"/>
+            <TextBox Name='NumTB00' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='0' Grid.Column='0' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB01' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='0' Grid.Column='1' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB02' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='0' Grid.Column='2' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB03' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='0' Grid.Column='3' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB04' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='0' Grid.Column='4' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB05' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='0' Grid.Column='5' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB06' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='0' Grid.Column='6' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB07' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='0' Grid.Column='7' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB08' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='0' Grid.Column='8' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB10' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='1' Grid.Column='0' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB11' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='1' Grid.Column='1' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB12' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='1' Grid.Column='2' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB13' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='1' Grid.Column='3' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB14' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='1' Grid.Column='4' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB15' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='1' Grid.Column='5' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB16' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='1' Grid.Column='6' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB17' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='1' Grid.Column='7' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB18' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='1' Grid.Column='8' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB20' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='2' Grid.Column='0' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB21' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='2' Grid.Column='1' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB22' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='2' Grid.Column='2' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB23' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='2' Grid.Column='3' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB24' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='2' Grid.Column='4' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB25' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='2' Grid.Column='5' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB26' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='2' Grid.Column='6' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB27' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='2' Grid.Column='7' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB28' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='2' Grid.Column='8' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB30' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='3' Grid.Column='0' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB31' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='3' Grid.Column='1' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB32' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='3' Grid.Column='2' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB33' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='3' Grid.Column='3' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB34' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='3' Grid.Column='4' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB35' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='3' Grid.Column='5' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB36' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='3' Grid.Column='6' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB37' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='3' Grid.Column='7' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB38' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='3' Grid.Column='8' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB40' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='4' Grid.Column='0' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB41' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='4' Grid.Column='1' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB42' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='4' Grid.Column='2' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB43' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='4' Grid.Column='3' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB44' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='4' Grid.Column='4' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB45' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='4' Grid.Column='5' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB46' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='4' Grid.Column='6' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB47' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='4' Grid.Column='7' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB48' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='4' Grid.Column='8' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB50' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='5' Grid.Column='0' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB51' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='5' Grid.Column='1' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB52' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='5' Grid.Column='2' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB53' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='5' Grid.Column='3' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB54' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='5' Grid.Column='4' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB55' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='5' Grid.Column='5' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB56' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='5' Grid.Column='6' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB57' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='5' Grid.Column='7' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB58' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='5' Grid.Column='8' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB60' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='6' Grid.Column='0' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB61' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='6' Grid.Column='1' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB62' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='6' Grid.Column='2' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB63' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='6' Grid.Column='3' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB64' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='6' Grid.Column='4' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB65' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='6' Grid.Column='5' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB66' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='6' Grid.Column='6' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB67' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='6' Grid.Column='7' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB68' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='6' Grid.Column='8' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB70' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='7' Grid.Column='0' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB71' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='7' Grid.Column='1' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB72' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='7' Grid.Column='2' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB73' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='7' Grid.Column='3' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB74' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='7' Grid.Column='4' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB75' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='7' Grid.Column='5' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB76' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='7' Grid.Column='6' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB77' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='7' Grid.Column='7' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB78' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='7' Grid.Column='8' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB80' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='8' Grid.Column='0' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB81' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='8' Grid.Column='1' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB82' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='8' Grid.Column='2' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB83' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='8' Grid.Column='3' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB84' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='8' Grid.Column='4' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB85' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='8' Grid.Column='5' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB86' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='8' Grid.Column='6' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB87' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='8' Grid.Column='7' BorderThickness='0' Margin='3'/>
+
+            <TextBox Name='NumTB88' PreviewTextInput='NumberValidationTextBox' HorizontalContentAlignment='Center' VerticalContentAlignment='Center' Grid.Row='8' Grid.Column='8' BorderThickness='0' Margin='3'/>
+
+
+        </Grid>
+
+
+        <Button Content="Mentés" Style="{StaticResource btnGray}" x:Name="Savebtn" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="106" Margin="0,0,0,7" Click="Savebtn_Click"/>
+
+        <Button Content="Vissza" Style="{StaticResource btnGray}" x:Name="Backbtn" Grid.Column="4" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="106" Margin="0,0,0,7" Click="Backbtn_Click"/>
+
+    </Grid>
+</Window>
