@@ -10,7 +10,7 @@ namespace GraphTheory
         public readonly List<int> nodeIndices = new List<int>(); // Ebben a listában tároljuk a meglévő csúcsok indexét
         public readonly List<string> lineIndices = new List<string>();
 
-        public void BreadthFirstSearch()
+        /*public void BreadthFirstSearch()
         {
 
             Trace.WriteLine("BreadthFirstSearch");
@@ -45,8 +45,7 @@ namespace GraphTheory
             {
                 Trace.WriteLine("Nodeindices: " + n);
             }
-        }
-
+        }*/
         /*public void DepthFirstSearch()
         {
             Trace.WriteLine("DepthFirstSearch: " + Settings.N);
@@ -111,6 +110,48 @@ namespace GraphTheory
             }
         }*/
 
+        public void BreadthFirstSearch()
+        {
+            for (int i = 0; i < Settings.N; i++)
+            {
+                visited[i] = false;
+            }
+            for (int i = 0; i < Settings.N; i++)
+            {
+                if (visited[i] == false)
+                {
+                    BejarBFS(i);
+                    lineIndices.Add("break");
+                }
+            }
+        }
+
+        List<int> Q = new List<int>();
+        private void BejarBFS(int v)
+        {
+            visited[v] = true;
+            nodeIndices.Add(v);
+            Q.Add(v);
+            while (Q.Count != 0)
+            {
+                int x = Q[0];
+                for (int y = 0; y < Settings.N; y++)
+                {
+                    //Trace.WriteLine("Y amit vizsgál: " + y);
+                    if (MainWindow.graph[x, y] == 1 && visited[y] == false)
+                    {
+                        nodeIndices.Add(y);
+                        lineIndices.Add(x.ToString() + y.ToString());
+                        visited[y] = true;
+                        Q.Add(y);
+                        //Trace.WriteLine("Y amit hozzá ad: " + y);
+                        //Trace.WriteLine("line" + x + y);
+                    }
+                }
+                Q.RemoveAt(0);
+            }
+        }
+
         private readonly bool[] visited = new bool[Settings.N];
         public void DepthFirstSearch()
         {
@@ -127,7 +168,6 @@ namespace GraphTheory
                 }
             }
         }
-
         public void BejarDFS(int v)
         {
             visited[v] = true;
@@ -147,18 +187,16 @@ namespace GraphTheory
     class Sudoku
     {
         readonly int[,] mat;
-        readonly int N; // number of columns/rows.
-        readonly int SRN; // square root of N
-        readonly int K; // No. Of missing digits
+        readonly int N; // Sorok és oszlopok száma
+        readonly int SRN; // N gyöke
+        readonly int K; // Üres mezők száma
         public static char[][] board = new char[9][];
 
-        // Constructor
         public Sudoku(int N, int K)
         {
             this.N = N;
             this.K = K;
 
-            // Compute square root of N
             double SRNd = Math.Sqrt(N);
             SRN = (int)SRNd;
             mat = new int[N, N];
@@ -167,29 +205,20 @@ namespace GraphTheory
         // Sudoku Generator
         public void FillValues()
         {
-            // Fill the diagonal of SRN x SRN matrices
             FillDiagonal();
-
-            // Fill remaining blocks
             FillRemaining(0, SRN);
-
-            // Remove Randomly K digits to make game
             RemoveKDigits();
-
             PrintSudoku();
         }
-
-        // Fill the diagonal SRN number of SRN x SRN matrices
         void FillDiagonal()
         {
-
             for (int i = 0; i < N; i += SRN)
-
-                // for diagonal box, start coordinates->i==j
+            {
                 FillBox(i, i);
+            }
         }
 
-        // Returns false if given 3 x 3 block contains num.
+        // False ha az adott 3x3 blokk tartalmazza az adott számot
         bool UnUsedInBox(int rowStart, int colStart, int num)
         {
             for (int i = 0; i < SRN; i++)
@@ -200,7 +229,6 @@ namespace GraphTheory
             return true;
         }
 
-        // Fill a 3 x 3 matrix.
         void FillBox(int row, int col)
         {
             int num;
@@ -219,14 +247,12 @@ namespace GraphTheory
             }
         }
 
-        // Random generator
         int RandomGenerator(int num)
         {
             Random rand = new Random();
             return (int)Math.Floor((double)(rand.NextDouble() * num + 1));
         }
 
-        // Check if safe to put in cell
         bool CheckIfSafe(int i, int j, int num)
         {
             return (UnUsedInRow(i, num) &&
@@ -234,7 +260,7 @@ namespace GraphTheory
                     UnUsedInBox(i - i % SRN, j - j % SRN, num));
         }
 
-        // check in the row for existence
+        // False ha az adott sor tartalmazza az adott számot
         bool UnUsedInRow(int i, int num)
         {
             for (int j = 0; j < N; j++)
@@ -243,7 +269,7 @@ namespace GraphTheory
             return true;
         }
 
-        // check in the row for existence
+        // False ha az adott oszlop tartalmazza az adott számot
         bool UnUsedInCol(int j, int num)
         {
             for (int i = 0; i < N; i++)
@@ -252,11 +278,8 @@ namespace GraphTheory
             return true;
         }
 
-        // A recursive function to Fill remaining
-        // matrix
         bool FillRemaining(int i, int j)
         {
-            //  System.out.println(i+" "+j);
             if (j >= N && i < N - 1)
             {
                 i++;
@@ -300,8 +323,6 @@ namespace GraphTheory
             return false;
         }
 
-        // Remove the K no. of digits to
-        // complete game
         public void RemoveKDigits()
         {
             int count = K;
@@ -309,7 +330,6 @@ namespace GraphTheory
             {
                 int cellId = RandomGenerator(N * N) - 1;
 
-                // extract coordinates i  and j
                 int i = cellId / N;
                 int j = cellId % 9;
                 if (j != 0)
@@ -323,7 +343,6 @@ namespace GraphTheory
             }
         }
 
-        // Print sudoku
         public void PrintSudoku()
         {
             int index = 0;
@@ -332,15 +351,10 @@ namespace GraphTheory
                 string line = "";
                 for (int j = 0; j < N; j++)
                 {
-                    //Console.Write(mat[i, j] + " ");
                     line += GenStringFromInt(mat[i, j]);
-
                 }
                 MainWindow.board[index++] = line.ToCharArray();
-                Console.WriteLine();
             }
-            Console.WriteLine();
-
         }
 
         public string GenStringFromInt(int i)
@@ -361,10 +375,6 @@ namespace GraphTheory
             };
         }
 
-
-
-
-
         public static void Solve()
         {
             SolveSudoku(MainWindow.board);
@@ -374,16 +384,8 @@ namespace GraphTheory
             RunDepthFirstSearch(board, 0, 0);
         }
 
-        /// <summary>
-        /// classical DFS algorithm to work on
-        /// </summary>
-        /// <param name="board"></param>
-        /// <param name="row"></param>
-        /// <param name="col"></param>
-        /// <returns></returns>
         private static bool RunDepthFirstSearch(char[][] board, int row, int col)
         {
-            //base case
             if (row > 8)
             {
                 return true;
@@ -417,14 +419,9 @@ namespace GraphTheory
             return false;
         }
 
-        /// <summary>
-        /// Given a position in the matrix, check current row and current column, and also it's small matrix 3 x 3
-        /// Idea is to remove existing chars from given string "123456789" which has all chars
-        /// </summary>
-        /// <param name="board"></param>
-        /// <param name="currentRow"></param>
-        /// <param name="currentCol"></param>
-        /// <returns></returns>
+
+        // Megnézi az adott sort és oszlopot illetve a 3x3-as mátrixot, hogy milyen elemek vannak benne és ezeket kiszedi a "123456789" stringből
+
         private static IEnumerable<char> GetAvailableDigits(char[][] board, int currentRow, int currentCol)
         {
             var hashSet = new HashSet<char>("123456789".ToCharArray());
@@ -434,10 +431,8 @@ namespace GraphTheory
                 hashSet.Remove(board[currentRow][index]);
                 hashSet.Remove(board[index][currentCol]);
             }
-
-            // small 3 x 3 matrix - one of 9 3 x 3 matrixes
-            var smallRow = currentRow / 3 * 3; // 0, 3, 6
-            var smallCol = currentCol / 3 * 3; // 0, 3, 6
+            var smallRow = currentRow / 3 * 3; 
+            var smallCol = currentCol / 3 * 3;
 
             for (int row = smallRow; row < smallRow + 3; row++)
             {

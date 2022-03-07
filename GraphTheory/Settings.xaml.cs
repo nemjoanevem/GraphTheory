@@ -75,24 +75,47 @@ namespace GraphTheory
             // //Trace.WriteLine(ListView.Items.Count);
             if (ListView.Items.Count < (int.Parse(NodesCounterCB.Text) - 1) * int.Parse(NodesCounterCB.Text) / 2) //(n-1)*n/2
             {
-                bool foundEdge = false;
-                Random random = new Random();
-
-                while (!foundEdge)
+                
+                if(int.TryParse(TxtBoxX.Text, out _) && int.TryParse(TxtBoxY.Text, out _))
                 {
-                    Edge tempP = new Edge
+                    if (int.Parse(TxtBoxX.Text) <= int.Parse(NodesCounterCB.Text) && int.Parse(TxtBoxY.Text) <= int.Parse(NodesCounterCB.Text))
                     {
-                        X = random.Next(int.Parse(NodesCounterCB.Text)),
-                        Y = random.Next(int.Parse(NodesCounterCB.Text)),
-                    };
-                    if (!tempP.XEqualsY() && !tempP.IsNewCoordADuplicate(edgeList))
-                    {
-                        edgeList.Add(tempP);
-                        foundEdge = true;
+                        Edge tempP = new Edge
+                        {
+                            X = int.Parse(TxtBoxX.Text),
+                            Y = int.Parse(TxtBoxY.Text),
+                        };
+
+                        if (!tempP.XEqualsY() && !tempP.IsNewCoordADuplicate(edgeList))
+                        {
+                            edgeList.Add(tempP);
+                            ListView.Items.Refresh();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Már létezik ilyen él, vagy érvénytelenek az adatok");
+                        }
                     }
                 }
+                else if (string.IsNullOrEmpty(TxtBoxX.Text) && string.IsNullOrEmpty(TxtBoxY.Text))
+                {
+                    bool foundEdge = false;
+                    Random random = new Random();
 
-                ListView.Items.Refresh();
+                    while (!foundEdge)
+                    {
+                        Edge tempP = new Edge
+                        {
+                            X = random.Next(int.Parse(NodesCounterCB.Text)),
+                            Y = random.Next(int.Parse(NodesCounterCB.Text)),
+                        };
+                        if (!tempP.XEqualsY() && !tempP.IsNewCoordADuplicate(edgeList))
+                        {
+                            edgeList.Add(tempP);
+                            foundEdge = true;
+                        }
+                    }
+                }
             }
             else
             {

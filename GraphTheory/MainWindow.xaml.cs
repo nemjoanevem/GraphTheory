@@ -21,13 +21,10 @@ using System.Windows.Threading;
 
 namespace GraphTheory
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public static int[,] graph;
-        public static bool showValues = true;
+        private bool showValues = false;
         private readonly SudSettings sudSettings = new SudSettings();
         private readonly Settings settings = new Settings();
         private DispatcherTimer timer;
@@ -57,8 +54,6 @@ namespace GraphTheory
                 OnPropertyChanged();
             }
         }
-
-        //private char[][] board = new char[9][];
 
         public MainWindow()
         {
@@ -447,12 +442,11 @@ namespace GraphTheory
         {
             BFSAlgBtn.Visibility = Visibility.Hidden;
             DFSAlgBtn.Visibility = Visibility.Hidden;
-            DFSSudSolve.Visibility = Visibility.Hidden;
-            DFSSudRand.Visibility = Visibility.Hidden;
+            DFSSudoku.Visibility = Visibility.Hidden;
             SelectedButton.Visibility = Visibility.Visible;
         }
 
-        private void SudokuButtons(Boolean show)
+        private void SudokuButtons(bool show)
         {
             if (show)
             {
@@ -461,6 +455,7 @@ namespace GraphTheory
                 DFSSudSolve.Visibility = Visibility.Visible;
                 DFSSudBack.Visibility = Visibility.Visible;
                 SudSettingsBtn.Visibility = Visibility.Visible;
+                GraphDisplayFrame.Visibility = Visibility.Hidden;
             }
             else
             {
@@ -469,9 +464,36 @@ namespace GraphTheory
                 DFSSudSolve.Visibility = Visibility.Hidden;
                 DFSSudBack.Visibility = Visibility.Hidden;
                 SudSettingsBtn.Visibility = Visibility.Hidden;
+                GraphDisplayFrame.Visibility = Visibility.Visible;
             }
             
 
+        }
+
+        private void DFSButtons(bool show)
+        {
+            if (show)
+            {
+                DFSAlgBtn.Visibility = Visibility.Visible;
+                DFSSudoku.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                DFSAlgBtn.Visibility = Visibility.Hidden;
+                DFSSudoku.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void BFSButtons(bool show)
+        {
+            if (show)
+            {
+                BFSAlgBtn.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BFSAlgBtn.Visibility = Visibility.Hidden;
+            }
         }
 
         private void UpdateBoardDisplay()
@@ -483,13 +505,17 @@ namespace GraphTheory
 
         private void DFSbtn_Click(object sender, RoutedEventArgs e)
         {
-            ShowSelectedButtons(DFSAlgBtn);
+            SudokuButtons(false);
+            BFSButtons(false);
+            DFSButtons(true);
             CurrentLabel = "Mélységi keresés";
         }
 
         private void BFSbtn_Click(object sender, RoutedEventArgs e)
         {
-            ShowSelectedButtons(BFSAlgBtn);
+            SudokuButtons(false);
+            DFSButtons(false);
+            BFSButtons(true);
             CurrentLabel = "Szélességi keresés";
         }
 
