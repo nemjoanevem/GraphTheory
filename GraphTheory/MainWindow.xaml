@@ -32,7 +32,11 @@
 
         <Button Content="Algoritmus" Style="{StaticResource btnGray}" x:Name="BFSAlgBtn" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="BFSAlgBtn_Click"/>
         <Button Content="Algoritmus" Style="{StaticResource btnGray}" x:Name="DFSAlgBtn" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Width="137" Click="DFSAlgBtn_Click"/>
+        <Button Content="Algoritmus" Style="{StaticResource btnGray}" x:Name="KruskalAlgBtn" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="KruskalAlgBtn_Click"/>
         <Button Content="Sudoku" Style="{StaticResource btnGray}" x:Name="DFSSudoku" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Width="137" Click="DFSSudoku_Click"/>
+        
+        <Button Content="Teljes Gráf" Style="{StaticResource btnGray}" x:Name="BFSPelda" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="BFSPelda_Click"/>
+
 
         <Button Content="Megoldás" Style="{StaticResource btnGray}" x:Name="DFSSudSolve" Grid.Column="7" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="DFSSudSolve_Click"/>
         <Button Content="Új generálása" Style="{StaticResource btnGray}" x:Name="DFSSudRand" Grid.Column="6" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="DFSSudRand_Click"/>
@@ -45,6 +49,25 @@
                VerticalContentAlignment="Center" 
                Grid.Row="4"
                Grid.Column="0"
+                />
+        
+        <Label Content="Minimális költség:" 
+               x:Name="SumLblTitle"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center" 
+               Grid.Row="4"
+               Grid.Column="7"
+               Visibility="Visible"
+               Margin="0, 0, 0, 35"
+                />
+
+        <Label Content="{Binding Path=sum}" 
+               x:Name="SumLbl"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center" 
+               Grid.Row="4"
+               Grid.Column="7"
+               Visibility="Visible"
                 />
 
         <Button Content="Gráf beállítások" Style="{StaticResource btnGray}" x:Name="SettingsBtn" Grid.Column="8" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsBtn_Click" Width="137"/>
@@ -97,8 +120,8 @@
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="2" />
             </Border>
             <Border 
-                    Canvas.Left="325"
-                    Canvas.Top="145"
+                    Canvas.Left="290"
+                    Canvas.Top="105"
                     Name="border3"
                     Panel.ZIndex="2"
                     CornerRadius="50"

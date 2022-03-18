@@ -84,6 +84,7 @@ namespace GraphTheory
                         {
                             X = int.Parse(TxtBoxX.Text),
                             Y = int.Parse(TxtBoxY.Text),
+                            Value = int.Parse(TxtBoxValue.Text)
                         };
 
                         if (!tempP.XEqualsY() && !tempP.IsNewCoordADuplicate(edgeList))
@@ -126,42 +127,52 @@ namespace GraphTheory
         private void EditEdgebtn_Click(object sender, RoutedEventArgs e)
         {
             //Trace.WriteLine(selectedEdge);
-
-            if (int.TryParse(TxtBoxX.Text, out _) && int.TryParse(TxtBoxY.Text, out _))
+            if (selectedEdge != null)
             {
-                if (int.Parse(TxtBoxX.Text) <= int.Parse(NodesCounterCB.Text) && int.Parse(TxtBoxY.Text) <= int.Parse(NodesCounterCB.Text))
-                {
-                    Edge tempP = new Edge
-                    {
-                        X = int.Parse(TxtBoxX.Text),
-                        Y = int.Parse(TxtBoxY.Text),
-                        Value = int.Parse(TxtBoxValue.Text)
-                    };
-                    if (tempP.X == selectedEdge.X && tempP.Y == selectedEdge.Y) // Ha csak a "value" változik
-                    {
-                        edgeList.Find(p => p.X == tempP.X && p.Y == tempP.Y).Value = tempP.Value;
-                    }
-                    else if (!tempP.XEqualsY() && !tempP.IsNewCoordADuplicate(edgeList)) // Ha "X" vagy "Y" (is) változik
-                    {
-                        int index = edgeList.FindIndex(p => p.X == selectedEdge.X && p.Y == selectedEdge.Y);
-                        edgeList[index] = tempP;
 
+
+
+                if (int.TryParse(TxtBoxX.Text, out _) && int.TryParse(TxtBoxY.Text, out _))
+                {
+                    if (int.Parse(TxtBoxX.Text) <= int.Parse(NodesCounterCB.Text) && int.Parse(TxtBoxY.Text) <= int.Parse(NodesCounterCB.Text))
+                    {
+                        Edge tempP = new Edge
+                        {
+                            X = int.Parse(TxtBoxX.Text),
+                            Y = int.Parse(TxtBoxY.Text),
+                            Value = int.Parse(TxtBoxValue.Text)
+                        };
+                        if (tempP.X == selectedEdge.X && tempP.Y == selectedEdge.Y) // Ha csak a "value" változik
+                        {
+                            edgeList.Find(p => p.X == tempP.X && p.Y == tempP.Y).Value = tempP.Value;
+                        }
+                        else if (!tempP.XEqualsY() && !tempP.IsNewCoordADuplicate(edgeList)) // Ha "X" vagy "Y" (is) változik
+                        {
+                            int index = edgeList.FindIndex(p => p.X == selectedEdge.X && p.Y == selectedEdge.Y);
+                            edgeList[index] = tempP;
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ugyan az az x és y érték, vagy szerepel már ilyen út a gráfban.");
+                        }
+                        ListView.Items.Refresh();
                     }
                     else
                     {
-                        MessageBox.Show("Ugyan az az x és y érték, vagy szerepel már ilyen út a gráfban.");
+                        MessageBox.Show("Nem jó a csúcs érték. (nagyobb mint a max)");
                     }
-                    ListView.Items.Refresh();
                 }
                 else
                 {
-                    MessageBox.Show("Nem jó a csúcs érték. (nagyobb mint a max)");
+                    MessageBox.Show("Nem jó a csúcs érték. (nem szám)");
                 }
             }
             else
             {
-                MessageBox.Show("Nem jó a csúcs érték. (nem szám)");
+                MessageBox.Show("Nincs kiválasztva él.");
             }
+
         }
 
         private void RemoveEdgebtn_Click(object sender, RoutedEventArgs e)

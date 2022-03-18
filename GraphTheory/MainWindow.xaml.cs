@@ -24,7 +24,7 @@ namespace GraphTheory
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public static int[,] graph;
-        private bool showValues = false;
+        private readonly bool showValues = true;
         private readonly SudSettings sudSettings = new SudSettings();
         private readonly Settings settings = new Settings();
         private DispatcherTimer timer;
@@ -42,6 +42,18 @@ namespace GraphTheory
                 OnPropertyChanged();
             }
         }
+
+        private string _sum = "";
+        public string sum
+        {
+            get { return _sum; }
+            set
+            {
+                _sum = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private char[][] _BoardDisplay = board;
 
@@ -317,6 +329,18 @@ namespace GraphTheory
             }
         }
 
+        private void SetStatusToZero()
+        {
+            foreach (Line line in lineList)
+            {
+                SetLineStatus(line, 0);
+            }
+
+            for (int i = 0; i < nodeList.Count; i++)
+            {
+                SetNodeStatus(i, 0);
+            }
+        }
 
         /*
          * Adott algoritmus kirajzolása
@@ -342,25 +366,18 @@ namespace GraphTheory
         private int orderX, orderCount, lineOrderX;
         private List<int> nodeOrder;
         private List<string> lineOrder;
-
-        private void ShowAlgorithm(List<int> nodeIndices, List<string> lineIndices)
+        private int algType = 0;
+        private void ShowAlgorithm(List<int> nodeIndices, List<string> lineIndices, int type = 1)
         {
-            foreach(Line line in lineList)
-            {
-                SetLineStatus(line, 0);
-            }
-
-            for(int i=0; i<nodeList.Count; i++)
-            {
-                SetNodeStatus(i, 0);
-            }
+            SetStatusToZero();
 
             nodeOrder = nodeIndices;
             lineOrder = lineIndices;
+            algType = type;
 
             timer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromSeconds(1)
+                Interval = TimeSpan.FromSeconds(1.5)
             };
             timer.Tick += Timer_Tick;
 
@@ -374,22 +391,38 @@ namespace GraphTheory
         {
             if (orderX < nodeList.Count && orderX < orderCount)
             {
-                SetNodeStatus(nodeOrder[orderX], 1);
-
-                if (lineOrderX <= lineOrder.Count && orderX > 0)
+                if (algType == 1)
                 {
-                    if (lineOrder[orderX - 1] != "break")
+                    SetNodeStatus(nodeOrder[orderX], 1);
+                    if (lineOrderX <= lineOrder.Count && orderX > 0 && orderX <= lineOrder.Count - 1)
                     {
-                        foreach (Line line in lineList)
+                        if (lineOrder[orderX - 1] != "break")
                         {
-                            string lineCode = line.Name.Remove(0, 4);
-                            if (lineCode == lineOrder[orderX - 1] || Reverse(lineCode) == lineOrder[orderX - 1])
+                            foreach (Line line in lineList)
                             {
-                                SetLineStatus(line, 1);
+                                string lineCode = line.Name.Remove(0, 4);
+                                if (lineCode == lineOrder[orderX - 1] || Reverse(lineCode) == lineOrder[orderX - 1])
+                                {
+                                    SetLineStatus(line, 1);
+                                }
                             }
+                            lineOrderX++;
                         }
-                        lineOrderX++;
                     }
+                }
+                else if(algType == 2)
+                {
+                    foreach (Line line in lineList)
+                    {
+                        string lineCode = line.Name.Remove(0, 4);
+                        if (lineOrderX < lineOrder.Count && (lineCode == lineOrder[lineOrderX] || Reverse(lineCode) == lineOrder[lineOrderX]))
+                        {
+                            SetLineStatus(line, 1);
+                            SetNodeStatus(int.Parse(lineCode.Substring(0, 1)), 1);
+                            SetNodeStatus(lineCode.Last() - 48, 1);
+                        }
+                    }
+                    lineOrderX++;
                 }
             }
             else
@@ -397,7 +430,6 @@ namespace GraphTheory
                 timer.Stop();
             }
             orderX++;
-
         }
 
         private void SetLineStatus(Line line, int status)
@@ -489,10 +521,30 @@ namespace GraphTheory
             if (show)
             {
                 BFSAlgBtn.Visibility = Visibility.Visible;
+                //BFSPelda.Visibility = Visibility.Visible;
             }
             else
             {
                 BFSAlgBtn.Visibility = Visibility.Hidden;
+                //BFSPelda.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void KruskalButtons(bool show)
+        {
+            if (show)
+            {
+                KruskalAlgBtn.Visibility = Visibility.Visible;
+                SumLbl.Visibility = Visibility.Visible;
+                SumLblTitle.Visibility = Visibility.Visible;
+                //BFSPelda.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                KruskalAlgBtn.Visibility = Visibility.Hidden;
+                SumLbl.Visibility = Visibility.Hidden;
+                SumLblTitle.Visibility = Visibility.Hidden;
+                //BFSPelda.Visibility = Visibility.Hidden;
             }
         }
 
@@ -505,23 +557,44 @@ namespace GraphTheory
 
         private void DFSbtn_Click(object sender, RoutedEventArgs e)
         {
+            if (timer != null)
+            {
+                timer.Stop();
+            }
+            SetStatusToZero();
             SudokuButtons(false);
             BFSButtons(false);
+            KruskalButtons(false);
             DFSButtons(true);
             CurrentLabel = "Mélységi keresés";
         }
 
         private void BFSbtn_Click(object sender, RoutedEventArgs e)
         {
+            if (timer != null)
+            {
+                timer.Stop();
+            }
+            SetStatusToZero();
             SudokuButtons(false);
             DFSButtons(false);
+            KruskalButtons(false);
             BFSButtons(true);
             CurrentLabel = "Szélességi keresés";
         }
 
         private void Kruskalbtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (timer != null)
+            {
+                timer.Stop();
+            }
+            SetStatusToZero();
+            SudokuButtons(false);
+            BFSButtons(false);
+            KruskalButtons(true);
+            DFSButtons(false);
+            CurrentLabel = "Kruskal algoritmus";
         }
 
         private void Dijkstrabtn_Click(object sender, RoutedEventArgs e)
@@ -554,7 +627,7 @@ namespace GraphTheory
 
             SudokuButtons(true);
 
-            Sudoku s = new Sudoku(9, 40);
+            Sudoku s = new Sudoku(9, 40, new int [0, 0]);
             s.FillValues();
             UpdateBoardDisplay();
         }
@@ -568,7 +641,7 @@ namespace GraphTheory
 
         private void DFSSudRand_Click(object sender, RoutedEventArgs e)
         {
-            Sudoku s = new Sudoku(9, 40);
+            Sudoku s = new Sudoku(9, 40, new int [0, 0]);
             s.FillValues();
             UpdateBoardDisplay();
         }
@@ -579,7 +652,37 @@ namespace GraphTheory
             UpdateBoardDisplay();
         }
 
+
+
         /*  ALGORITMUS GOMBOK   */
+
+        private void BFSPelda_Click(object sender, RoutedEventArgs e)
+        {
+            /*Random random = new Random();
+            int max = (Settings.N - 1) * (Settings.N / 2);
+            while (Settings.edgeList.Count != max)
+            {
+                Edge tempP = new Edge
+                {
+                    X = random.Next(Settings.N),
+                    Y = random.Next(Settings.N),
+                };
+                if (!tempP.XEqualsY() && !tempP.IsNewCoordADuplicate(Settings.edgeList))
+                {
+                    Settings.edgeList.Add(tempP);
+                }
+            }
+            ClearLines();
+            DrawLines();*/
+        }
+
+        private void KruskalAlgBtn_Click(object sender, RoutedEventArgs e)
+        {
+            FillGraph();
+            Algorithms alg = new Algorithms();
+            sum = alg.KruskalAlgorithm().ToString();
+            ShowAlgorithm(alg.nodeIndices, alg.lineIndices, 2);
+        }
 
         private void BFSAlgBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -593,7 +696,6 @@ namespace GraphTheory
         {
             FillGraph();
             Algorithms alg = new Algorithms();
-            //alg.DepthFirstSearch();
             alg.DepthFirstSearch();
             ShowAlgorithm(alg.nodeIndices, alg.lineIndices);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace GraphTheory
@@ -110,6 +111,97 @@ namespace GraphTheory
             }
         }*/
 
+        public int KruskalAlgorithm()
+        {
+            List<int[]> arrayList = new List<int[]>();
+            arrayList = Make_set(arrayList);
+            List<Edge> sortedEdgeList = SortEdges();
+            int sum = 0;
+            foreach(Edge e in sortedEdgeList)
+            {
+                if (Find_set(arrayList, e.X, e.Y))
+                {
+                    if (!nodeIndices.Contains(e.X))
+                    {
+                        nodeIndices.Add(e.X);
+                    }
+                    if (!nodeIndices.Contains(e.Y))
+                    {
+                        nodeIndices.Add(e.Y);
+                    }
+                    arrayList = Union(arrayList, e.X, e.Y);
+                    lineIndices.Add(e.X.ToString() + e.Y.ToString());
+                    sum += e.Value;
+                }
+            }
+            return sum;
+        }
+
+        private List<Edge> SortEdges()
+        {
+            /*List<Edge> sortedEdgeList = new List<Edge>();
+            Edge min = new Edge();
+            min.Value = 10;
+            for(int i = 0; i < Settings.N; i++)
+            {
+                foreach (Edge e in Settings.edgeList)
+                {
+                    if (e.Value <= min.Value)
+                    {
+                        min = e;
+                    }
+                }
+                sortedEdgeList.Add(min);
+            }*/
+            List<Edge> sortedEdgeList = Settings.edgeList.OrderBy(x => x.Value).ToList();
+            return sortedEdgeList;
+        }
+
+        private List<int[]> Make_set(List<int[]> arrayList)
+        {
+            for (int y = 0; y < Settings.N; y++)
+            {
+                int[] arr = new int[1];
+                arr[0] = y;
+                arrayList.Add(arr);
+            }
+            return arrayList;
+        }
+
+        private bool Find_set(List<int[]> arrayList, int u, int v)
+        {
+            foreach (int[] i in arrayList)
+            {
+                if (i.Contains(u) && i.Contains(v))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private List<int[]> Union(List<int[]> arrayList, int u, int v)
+        {
+            int firstIndex = -1;
+            int secondIndex = -1;
+            foreach(int[] i in arrayList)
+            {
+                if (i.Contains(u))
+                {
+                    firstIndex = arrayList.IndexOf(i);
+                }
+                else if(i.Contains(v)){
+                    secondIndex = arrayList.IndexOf(i);
+                }
+            }
+            if (firstIndex != -1 && secondIndex != -1)
+            {
+                arrayList[firstIndex] = arrayList[firstIndex].Concat(arrayList[secondIndex]).ToArray();
+                arrayList[secondIndex] = new int[0];
+            }
+            return arrayList;
+        }
+
         public void BreadthFirstSearch()
         {
             for (int i = 0; i < Settings.N; i++)
@@ -126,7 +218,7 @@ namespace GraphTheory
             }
         }
 
-        List<int> Q = new List<int>();
+        readonly List<int> Q = new List<int>();
         private void BejarBFS(int v)
         {
             visited[v] = true;
@@ -192,14 +284,25 @@ namespace GraphTheory
         readonly int K; // Üres mezők száma
         public static char[][] board = new char[9][];
 
-        public Sudoku(int N, int K)
+        public Sudoku(int N, int K, int[,] m)
         {
+            //Trace.WriteLine(m);
+            if (m == new int [0, 0] || m.Length == 0)
+            {
+                //Trace.WriteLine("Az m most 9 9 lett");
+                mat = new int[N, N];
+            }
+            else
+            {
+                mat = m;
+            }
+
             this.N = N;
             this.K = K;
 
             double SRNd = Math.Sqrt(N);
             SRN = (int)SRNd;
-            mat = new int[N, N];
+            
         }
 
         // Sudoku Generator
@@ -219,12 +322,23 @@ namespace GraphTheory
         }
 
         // False ha az adott 3x3 blokk tartalmazza az adott számot
-        bool UnUsedInBox(int rowStart, int colStart, int num)
+        public bool UnUsedInBox(int rowStart, int colStart, int num, int col = -1, int row = -1)
         {
-            for (int i = 0; i < SRN; i++)
-                for (int j = 0; j < SRN; j++)
-                    if (mat[rowStart + i, colStart + j] == num)
-                        return false;
+            if(col == -1 || row == -1)
+            {
+                for (int i = 0; i < SRN; i++)
+                    for (int j = 0; j < SRN; j++)
+                        if (mat[rowStart + i, colStart + j] == num)
+                            return false;
+            }
+            else
+            {
+                for (int i = 0; i < SRN; i++)
+                    for (int j = 0; j < SRN; j++)
+                        if (mat[rowStart + i, colStart + j] == num && (rowStart + i != row || colStart + j != col))
+                            return false;
+            }
+            
 
             return true;
         }
@@ -261,20 +375,38 @@ namespace GraphTheory
         }
 
         // False ha az adott sor tartalmazza az adott számot
-        bool UnUsedInRow(int i, int num)
+        public bool UnUsedInRow(int i, int num, int col = -1)
         {
-            for (int j = 0; j < N; j++)
-                if (mat[i, j] == num)
-                    return false;
+            if(col == -1)
+            {
+                for (int j = 0; j < N; j++)
+                    if (mat[i, j] == num)
+                        return false;
+            }
+            else
+            {
+                for (int j = 0; j < N; j++)
+                    if (mat[i, j] == num && j != col)
+                        return false;
+            }
             return true;
         }
 
         // False ha az adott oszlop tartalmazza az adott számot
-        bool UnUsedInCol(int j, int num)
+        public bool UnUsedInCol(int j, int num, int row = -1)
         {
-            for (int i = 0; i < N; i++)
-                if (mat[i, j] == num)
-                    return false;
+            if(row == -1)
+            {
+                for (int i = 0; i < N; i++)
+                    if (mat[i, j] == num)
+                        return false;
+            }
+            else
+            {
+                for (int i = 0; i < N; i++)
+                    if (mat[i, j] == num && i != row)
+                        return false;
+            }
             return true;
         }
 

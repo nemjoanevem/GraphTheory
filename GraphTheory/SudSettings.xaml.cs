@@ -21,7 +21,7 @@ namespace GraphTheory
     /// </summary>
     public partial class SudSettings : Window
     {
-        private char[][] tempBoard = new char[9][];
+        // private readonly char[][] tempBoard = new char[9][];
         public SudSettings()
         {
             InitializeComponent();
@@ -51,9 +51,9 @@ namespace GraphTheory
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
+                    if (child != null && child is T t)
                     {
-                        yield return (T)child;
+                        yield return t;
                     }
                 }
             }
@@ -71,45 +71,118 @@ namespace GraphTheory
             int i = 0;
             int j = 0;
             int zeroCounter = 0;
+            if (Check_input())
+            {
+                foreach (TextBox tb in FindVisualChildren<TextBox>(Inner))
+                {
+                    if (j == 9)
+                    {
+                        j = 0;
+                        i++;
+                    }
+                    if (Correct_input(tb.Text) == ".")
+                    {
+                        zeroCounter++;
+                    }
+                    if (zeroCounter <= 64)
+                    {
+                        //tempBoard[i][j] = Correct_input(tb.Text).ToCharArray()[0];
+                        MainWindow.board[i][j] = Correct_input(tb.Text).ToCharArray()[0];
+
+
+                    }
+                    else
+                    {
+                        ErrorLabel = "Túl kevés szám van megadva";
+                    }
+                    j++;
+                }
+            }
+            else
+            {
+                string message = "A beírt sudoku nem megoldható";
+                string title = "Hiba";
+                MessageBox.Show(message, title);
+            }
+        }
+
+        private bool Check_input()
+        {
+            int[,] mat = Fill_mat_values();
+            int row = 0;
+            int col = 0;
+            Sudoku sud = new Sudoku(9, 40, mat);
+
             foreach (TextBox tb in FindVisualChildren<TextBox>(Inner))
             {
-                if(j == 9)
+                
+                if (col > 8)
                 {
-                    j = 0;
-                    i++;
+                    col = 0;
+                    row++;
                 }
-                if(Correct_input(tb.Text) == "."){
-                    zeroCounter++;
-                }
-                if (zeroCounter <= 64)
+                /*Trace.WriteLine("row = " + row + " col = " + col);
+                Trace.WriteLine("Beírt szám: " + mat[row, col]);
+                Trace.WriteLine("row: " + sud.UnUsedInRow(row, mat[row, col]));
+                Trace.WriteLine("col: " + sud.UnUsedInCol(row, mat[row, col]));
+                Trace.WriteLine("box: " + sud.UnUsedInBox(Get_row_or_col_start(row), Get_row_or_col_start(col), mat[row, col]));*/
+                if (mat[row, col] != 0)
                 {
-                    //tempBoard[i][j] = Correct_input(tb.Text).ToCharArray()[0];
+                    if (!sud.UnUsedInRow(row, mat[row, col], col) || !sud.UnUsedInCol(col, mat[row, col], row) || !sud.UnUsedInBox(Get_row_or_col_start(row), Get_row_or_col_start(col), mat[row, col], col, row))
+                    {
+                        return false;
+                    }
+                }
+                col++;
+            }
+            return true;
+        }
 
-                    MainWindow.board[i][j] = Correct_input(tb.Text).ToCharArray()[0];
+        private int Get_row_or_col_start(int num)
+        {
+            if(num <= 2)
+            {
+                return 0;
+            }
+            else if(num > 2 && num <= 5)
+            {
+                return 3;
+            }
+            else if(num > 5 && num <= 8)
+            {
+                return 6;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        private int[,] Fill_mat_values()
+        {
+            int[,] mat = new int [9,9];
+            int row = 0;
+            int col = 0;
+            foreach (TextBox tb in FindVisualChildren<TextBox>(Inner))
+            {
+                if (col > 8)
+                {
+                    col = 0;
+                    row++;
+                }
+                if (Correct_input(tb.Text) == "."){
+                    mat[row, col] = 0;
                 }
                 else
                 {
-                    ErrorLabel = "Túl kevés szám van megadva";
+                    mat[row, col] = int.Parse(Correct_input(tb.Text));
                 }
-                j++;
+                
+                col++;
             }
+            return mat;
         }
-
-        /*private bool check_input()
-        {
-            for(int i = 0; i< 9; i++)
-            {
-                for(int j = 0; j<9; j++)
-                {
-                    for(int k = 0; k<; k++)
-                    {
-
-                    }
-                }
-            }
-            return false;
-        }
-        */
+        
 
 
         private string Correct_input(string str)
