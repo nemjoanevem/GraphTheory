@@ -33,6 +33,7 @@
         <Button Content="Algoritmus" Style="{StaticResource btnGray}" x:Name="BFSAlgBtn" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="BFSAlgBtn_Click"/>
         <Button Content="Algoritmus" Style="{StaticResource btnGray}" x:Name="DFSAlgBtn" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Width="137" Click="DFSAlgBtn_Click"/>
         <Button Content="Algoritmus" Style="{StaticResource btnGray}" x:Name="KruskalAlgBtn" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="KruskalAlgBtn_Click"/>
+        <Button Content="Algoritmus" Style="{StaticResource btnGray}" x:Name="DijkstraAlgBtn" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="DijkstraAlgBtn_Click"/>
         <Button Content="Sudoku" Style="{StaticResource btnGray}" x:Name="DFSSudoku" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Width="137" Click="DFSSudoku_Click"/>
         
         <Button Content="Teljes Gráf" Style="{StaticResource btnGray}" x:Name="BFSPelda" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="BFSPelda_Click"/>
@@ -70,6 +71,16 @@
                Visibility="Visible"
                 />
 
+        <Label Content="Kiinduló pont: 0" 
+               x:Name="Dijkstralbl"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center" 
+               Grid.Row="4"
+               Grid.Column="7"
+               Visibility="Hidden"
+               Margin="0, 0, 0, 35"
+                />
+
         <Button Content="Gráf beállítások" Style="{StaticResource btnGray}" x:Name="SettingsBtn" Grid.Column="8" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsBtn_Click" Width="137"/>
         <Button Content="Sudoku beállítások" Style="{StaticResource btnGray}" x:Name="SudSettingsBtn" Grid.Column="8" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SudSettingsBtn_Click" Width="137" Visibility="Hidden"/>
         <Button Content="Kilépés" Style="{StaticResource btnGray}" x:Name="ExitBtn" Grid.Column="8" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="137" Click="ExitBtn_Click"/>
@@ -88,7 +99,6 @@
                     BorderBrush="Black"
                     BorderThickness="2"
                     Visibility="Visible">
-
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="0" />
             </Border>
             <Border 
@@ -203,6 +213,108 @@
                     Visibility="Visible">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="8" />
             </Border>
+
+            <Label Content="{Binding Path=Weight[0]}"
+               Canvas.Left="473"
+               Canvas.Top="0"
+               Name="d0"
+               HorizontalContentAlignment="Center"
+               Grid.Row="4"
+               Grid.Column="7"
+               Visibility="Hidden"
+               Width="50"
+               Height="30"
+                />
+            <Label Content="{Binding Path=Weight[1]}"
+               Canvas.Left="62"
+               Canvas.Top="79"
+               Name="d1"
+               HorizontalContentAlignment="Center"
+               Grid.Row="4"
+               Grid.Column="7"
+               Visibility="Hidden"
+               Width="50"
+               Height="30"
+                />
+            <Label Content="{Binding Path=Weight[2]}"
+               Canvas.Left="993"
+               Canvas.Top="20"
+               Name="d2"
+               HorizontalContentAlignment="Center"
+               Grid.Row="4"
+               Grid.Column="7"
+               Visibility="Hidden"
+               Width="50"
+               Height="30"
+                />
+            <Label Content="{Binding Path=Weight[3]}"
+               Canvas.Left="285"
+               Canvas.Top="75"
+               Name="d3"
+               HorizontalContentAlignment="Center"
+               Grid.Row="4"
+               Grid.Column="7"
+               Visibility="Hidden"
+               Width="50"
+               Height="30"
+                />
+            <Label Content="{Binding Path=Weight[4]}"
+               Canvas.Left="758"
+               Canvas.Top="115"
+               Name="d4"
+               HorizontalContentAlignment="Center"
+               Grid.Row="4"
+               Grid.Column="7"
+               Visibility="Hidden"
+               Width="50"
+               Height="30"
+                />
+            <Label Content="{Binding Path=Weight[5]}"
+               Canvas.Left="605"
+               Canvas.Top="344"
+               Name="d5"
+               HorizontalContentAlignment="Center"
+               Grid.Row="4"
+               Grid.Column="7"
+               Visibility="Hidden"
+               Width="50"
+               Height="30"
+                />
+            <Label Content="{Binding Path=Weight[6]}"
+               Canvas.Left="143"
+               Canvas.Top="234"
+               Name="d6"
+               HorizontalContentAlignment="Center"
+               Grid.Row="4"
+               Grid.Column="7"
+               Visibility="Hidden"
+               Width="50"
+               Height="30"
+                />
+            <Label Content="{Binding Path=Weight[7]}"
+               Canvas.Left="926"
+               Canvas.Top="254"
+               Name="d7"
+               HorizontalContentAlignment="Center"
+               Grid.Row="4"
+               Grid.Column="7"
+               Visibility="Hidden"
+               Width="50"
+               Height="30"
+                />
+            <Label Content="{Binding Path=Weight[8]}"
+               Canvas.Left="340"
+               Canvas.Top="324"
+               Name="d8"
+               HorizontalContentAlignment="Center"
+               Grid.Row="4"
+               Grid.Column="7"
+               Visibility="Hidden"
+               Width="50"
+               Height="30"
+                />
+
+
         </Canvas>
         <Grid x:Name="Inner" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="5" Visibility="Hidden">
             <Grid.ColumnDefinitions>

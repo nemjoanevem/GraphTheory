@@ -113,6 +113,7 @@ namespace GraphTheory
                         if (!tempP.XEqualsY() && !tempP.IsNewCoordADuplicate(edgeList))
                         {
                             edgeList.Add(tempP);
+                            ListView.Items.Refresh();
                             foundEdge = true;
                         }
                     }

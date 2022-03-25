@@ -46,7 +46,7 @@ namespace GraphTheory
         private string _sum = "";
         public string sum
         {
-            get { return _sum; }
+            get => _sum;
             set
             {
                 _sum = value;
@@ -59,10 +59,22 @@ namespace GraphTheory
 
         public char[][] BoardDisplay
         {
-            get { return _BoardDisplay; }
+            get => _BoardDisplay;
             set
             {
                 _BoardDisplay = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int[] _Weight = new int[Settings.N];
+
+        public int[] Weight
+        {
+            get => _Weight;
+            set
+            {
+                _Weight = value;
                 OnPropertyChanged();
             }
         }
@@ -81,6 +93,7 @@ namespace GraphTheory
                 settings.EdgesCount = Settings.edgeList.Count();
                 Edge lastEdge = Settings.edgeList.Last();
                 DrawLine(lastEdge);
+                //Array.Clear(Weight, 0, Weight.Length);
             };
 
             settings.EditEdgebtn.Click += delegate
@@ -178,8 +191,8 @@ namespace GraphTheory
                 }
                 i++;
             }
+            //Array.Clear(Weight, 0, Weight.Length);
 
-            
         }
 
         private void DrawLines()
@@ -292,7 +305,8 @@ namespace GraphTheory
             {
                 List<MarkupProperty> properties = MarkupWriter.GetMarkupObjectFor(border).Properties.ToList();
 
-                if(border.Visibility == Visibility.Visible)
+                
+                if(border.Visibility == Visibility.Visible && border.Name != "")
                 {
                     Edge node = new Edge
                     {
@@ -313,7 +327,10 @@ namespace GraphTheory
         {
             foreach (Border border in FindVisualChildren<Border>(GraphDisplayFrame))
             {
-                border.Visibility = border.Name[^1] - 48 < nodesCounter ? Visibility.Visible : Visibility.Hidden;
+                if(border.Name != "")
+                {
+                    border.Visibility = border.Name[^1] - 48 < nodesCounter ? Visibility.Visible : Visibility.Hidden;
+                }
             }
             nodeList = GetNodeList();
         }
@@ -452,9 +469,12 @@ namespace GraphTheory
             {
                 foreach (Border border in FindVisualChildren<Border>(GraphDisplayFrame))
                 {
-                    if(border.Name[^1] - 48 == index)
+                    if(border.Name != "")
                     {
-                        border.Background = Brushes.Wheat;
+                        if (border.Name[^1] - 48 == index && border.Name.IndexOf("d") != 0)
+                        {
+                            border.Background = Brushes.Wheat;
+                        }
                     }
                 }
             }
@@ -462,9 +482,12 @@ namespace GraphTheory
             {
                 foreach (Border border in FindVisualChildren<Border>(GraphDisplayFrame))
                 {
-                    if (border.Name[^1] - 48 == index)
+                    if(border.Name != "")
                     {
-                        border.Background = Brushes.Red;
+                        if (border.Name[^1] - 48 == index)
+                        {
+                            border.Background = Brushes.Red;
+                        }
                     }
                 }
             }
@@ -548,11 +571,51 @@ namespace GraphTheory
             }
         }
 
+        private void DijkstraButtons(bool show)
+        {
+            if (show)
+            {
+                HideORShowNodeWeights(show);
+                DijkstraAlgBtn.Visibility = Visibility.Visible;
+                Dijkstralbl.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                HideORShowNodeWeights(show);
+                DijkstraAlgBtn.Visibility = Visibility.Hidden;
+                Dijkstralbl.Visibility = Visibility.Hidden;
+            }
+        }
+
         private void UpdateBoardDisplay()
         {
             BoardDisplay = board;
         }
-        
+
+        private void HideORShowNodeWeights(bool show)
+        {
+            if (show)
+            {
+                foreach(Label label in FindVisualChildren<Label>(GraphDisplayFrame))
+                {
+                    if (label.Name.ToString().IndexOf("d") == 0)
+                    {
+                        label.Visibility = Visibility.Visible;
+                    }
+                }
+            }
+            else
+            {
+                foreach (Label label in FindVisualChildren<Label>(GraphDisplayFrame))
+                {
+                    if (label.Name.ToString().IndexOf("d") == 0)
+                    {
+                        label.Visibility = Visibility.Hidden;
+                    }
+                }
+            }
+        }
+
         /*  ÁLTALÁNOS GOMBOK    */
 
         private void DFSbtn_Click(object sender, RoutedEventArgs e)
@@ -566,6 +629,7 @@ namespace GraphTheory
             BFSButtons(false);
             KruskalButtons(false);
             DFSButtons(true);
+            DijkstraButtons(false);
             CurrentLabel = "Mélységi keresés";
         }
 
@@ -580,6 +644,7 @@ namespace GraphTheory
             DFSButtons(false);
             KruskalButtons(false);
             BFSButtons(true);
+            DijkstraButtons(false);
             CurrentLabel = "Szélességi keresés";
         }
 
@@ -594,12 +659,23 @@ namespace GraphTheory
             BFSButtons(false);
             KruskalButtons(true);
             DFSButtons(false);
+            DijkstraButtons(false);
             CurrentLabel = "Kruskal algoritmus";
         }
 
         private void Dijkstrabtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (timer != null)
+            {
+                timer.Stop();
+            }
+            SetStatusToZero();
+            SudokuButtons(false);
+            BFSButtons(false);
+            KruskalButtons(false);
+            DFSButtons(false);
+            DijkstraButtons(true);
+            CurrentLabel = "Dijkstra algoritmus";
         }
 
         private void SettingsBtn_Click(object sender, RoutedEventArgs e)
@@ -682,6 +758,13 @@ namespace GraphTheory
             Algorithms alg = new Algorithms();
             sum = alg.KruskalAlgorithm().ToString();
             ShowAlgorithm(alg.nodeIndices, alg.lineIndices, 2);
+        }
+
+        private void DijkstraAlgBtn_Click(object sender, RoutedEventArgs e)
+        {
+            FillGraph();
+            Algorithms alg = new Algorithms();
+            Weight = alg.DijkstraAlgorithm();
         }
 
         private void BFSAlgBtn_Click(object sender, RoutedEventArgs e)

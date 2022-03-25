@@ -111,6 +111,80 @@ namespace GraphTheory
             }
         }*/
 
+        //distV megadja az összes csúcshoz az eljutási költséget
+        //prevV megadja az összes csúcsnál, hogy mi az előtte álló csúcs
+
+        public int[] DijkstraAlgorithm(int s = 0, int t = 8)
+        {
+            int[] distV = new int[Settings.N];
+            int[] prevV = new int[Settings.N];
+            int u;
+            List<int> Q = new List<int>();
+            for (int i = 0; i < Settings.N; i++)
+            {
+                distV[i] = int.MaxValue;
+                prevV[i] = 0;
+                Q.Add(i);
+            }
+            distV[s] = 0;
+            while(Q.Count != 0)
+            {
+                u = GetMinDistU(Q, distV);
+                Q.Remove(u);
+                for(int i = 0; i < Settings.N; i++)
+                {
+                    if (MainWindow.graph[u, i] == 1)
+                    {
+                        int alt = distV[u] + GetWeight(u, i);
+                        if(alt < distV[i])
+                        {
+                            distV[i] = alt;
+                            prevV[i] = u;
+                        }
+                    }
+                }
+            }
+            foreach(int i in prevV)
+            {
+                Trace.WriteLine("prev: " + i);
+            }
+            foreach(int i in distV)
+            {
+                Trace.WriteLine("dist: " + i);
+            }
+
+            return distV;
+        }
+
+        private int GetMinDistU(List<int> Q, int[] distV)
+        {
+            int index = Q[0];
+            int small = distV[index];
+            int smallIndex = 0;
+
+            for (int i = 0; i < distV.Length; i++)
+            {
+                if (small >= distV[i] && Q.Contains(i))
+                {
+                    small = distV[i];
+                    smallIndex = i;
+                }
+            }
+            return smallIndex;
+        }
+
+        private int GetWeight(int v, int u)
+        {
+            foreach (Edge e in Settings.edgeList)
+            {
+                if ((e.X == v && e.Y == u) || (e.Y == v && e.X == u))
+                {
+                    return e.Value;
+                }
+            }
+            return 0;
+        }
+
         public int KruskalAlgorithm()
         {
             List<int[]> arrayList = new List<int[]>();
