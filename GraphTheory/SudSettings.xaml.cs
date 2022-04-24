@@ -121,11 +121,6 @@ namespace GraphTheory
                     col = 0;
                     row++;
                 }
-                /*Trace.WriteLine("row = " + row + " col = " + col);
-                Trace.WriteLine("Beírt szám: " + mat[row, col]);
-                Trace.WriteLine("row: " + sud.UnUsedInRow(row, mat[row, col]));
-                Trace.WriteLine("col: " + sud.UnUsedInCol(row, mat[row, col]));
-                Trace.WriteLine("box: " + sud.UnUsedInBox(Get_row_or_col_start(row), Get_row_or_col_start(col), mat[row, col]));*/
                 if (mat[row, col] != 0)
                 {
                     if (!sud.UnUsedInRow(row, mat[row, col], col) || !sud.UnUsedInCol(col, mat[row, col], row) || !sud.UnUsedInBox(Get_row_or_col_start(row), Get_row_or_col_start(col), mat[row, col], col, row))
@@ -247,6 +242,20 @@ namespace GraphTheory
                 var e = new PropertyChangedEventArgs(propertyName);
                 handler(this, e);
             }
+        }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            // Begin dragging the window
+            this.DragMove();
+        }
+
+        void close(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
         }
     }
 }

@@ -27,8 +27,8 @@
         <Border BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4"/>
         <Button Content="Mélységi keresés" Style="{StaticResource btnGray}" x:Name="DFSbtn" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="DFSbtn_Click" Width="137"/>
         <Button Content="Szélességi keresés" Style="{StaticResource btnGray}" x:Name="BFSbtn" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="BFSbtn_Click" Width="137"/>
-        <Button Content="Kruskal algoritmus" Style="{StaticResource btnGray}" x:Name="Kruskalbtn" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Kruskalbtn_Click" Width="137"/>
-        <Button Content="Dijkstra algoritmus" Style="{StaticResource btnGray}" x:Name="Dijkstrabtn" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Dijkstrabtn_Click" Width="137"/>
+        <Button Content="Kruskal-algoritmus" Style="{StaticResource btnGray}" x:Name="Kruskalbtn" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Kruskalbtn_Click" Width="137"/>
+        <Button Content="Dijkstra-algoritmus" Style="{StaticResource btnGray}" x:Name="Dijkstrabtn" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Dijkstrabtn_Click" Width="137"/>
 
         <Button Content="Algoritmus" Style="{StaticResource btnGray}" x:Name="BFSAlgBtn" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Width="137" Click="BFSAlgBtn_Click"/>
         <Button Content="Algoritmus" Style="{StaticResource btnGray}" x:Name="DFSAlgBtn" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Width="137" Click="DFSAlgBtn_Click"/>
@@ -58,7 +58,7 @@
                VerticalContentAlignment="Center" 
                Grid.Row="4"
                Grid.Column="7"
-               Visibility="Visible"
+               Visibility="Hidden"
                Margin="0, 0, 0, 35"
                 />
 
@@ -71,7 +71,7 @@
                Visibility="Visible"
                 />
 
-        <Label Content="Kiinduló pont: 0" 
+        <Label Content="Kiinduló pont:" 
                x:Name="Dijkstralbl"
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Center" 
@@ -80,6 +80,8 @@
                Visibility="Hidden"
                Margin="0, 0, 0, 35"
                 />
+
+        <TextBox x:Name="DijkstraStart" Visibility="Hidden" PreviewTextInput="NumberValidationTextBox" Grid.Column="7" Grid.Row="5" Height="20" Margin="60 10 60 0">0</TextBox>
 
         <Button Content="Gráf beállítások" Style="{StaticResource btnGray}" x:Name="SettingsBtn" Grid.Column="8" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsBtn_Click" Width="137"/>
         <Button Content="Sudoku beállítások" Style="{StaticResource btnGray}" x:Name="SudSettingsBtn" Grid.Column="8" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SudSettingsBtn_Click" Width="137" Visibility="Hidden"/>

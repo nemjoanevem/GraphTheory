@@ -1,0 +1,5 @@
+C:\Users\Geri\source\repos\GraphTheory\GraphTheory\bin\Release\netcoreapp3.1\publish\graphTheory\GraphTheory.exe
+C:\Users\Geri\source\repos\GraphTheory\GraphTheory\bin\Release\netcoreapp3.1\publish\graphTheory\GraphTheory.dll
+C:\Users\Geri\source\repos\GraphTheory\GraphTheory\bin\Release\netcoreapp3.1\publish\graphTheory\GraphTheory.deps.json
+C:\Users\Geri\source\repos\GraphTheory\GraphTheory\bin\Release\netcoreapp3.1\publish\graphTheory\GraphTheory.runtimeconfig.json
+C:\Users\Geri\source\repos\GraphTheory\GraphTheory\bin\Release\netcoreapp3.1\publish\graphTheory\GraphTheory.pdb

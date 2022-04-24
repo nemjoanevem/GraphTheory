@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Gráf beállítások" Height="450" Width="600" ResizeMode="NoResize" WindowStyle="None">
+        Title="Gráf beállítások" Height="450" Width="600" ResizeMode="NoResize" WindowStyle="None"
+        Closing="close"
+        >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>

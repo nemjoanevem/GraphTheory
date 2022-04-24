@@ -23,3 +23,4 @@ C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\Setti
 C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\Settings.baml
 C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\SudSettings.g.cs
 C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\SudSettings.baml
+C:\Users\Geri\source\repos\GraphTheory\GraphTheory\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs

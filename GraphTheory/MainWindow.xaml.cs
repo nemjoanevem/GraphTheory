@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using System.Windows.Threading;
+using System.Text.RegularExpressions;
 
 namespace GraphTheory
 {
@@ -578,12 +579,14 @@ namespace GraphTheory
                 HideORShowNodeWeights(show);
                 DijkstraAlgBtn.Visibility = Visibility.Visible;
                 Dijkstralbl.Visibility = Visibility.Visible;
+                DijkstraStart.Visibility = Visibility.Visible;
             }
             else
             {
                 HideORShowNodeWeights(show);
                 DijkstraAlgBtn.Visibility = Visibility.Hidden;
                 Dijkstralbl.Visibility = Visibility.Hidden;
+                DijkstraStart.Visibility = Visibility.Hidden;
             }
         }
 
@@ -764,7 +767,24 @@ namespace GraphTheory
         {
             FillGraph();
             Algorithms alg = new Algorithms();
-            Weight = alg.DijkstraAlgorithm();
+            int s = convertStringToInt(DijkstraStart.Text.ToString());
+            Weight = alg.DijkstraAlgorithm(s);
+        }
+
+        private int convertStringToInt(string str)
+        {
+            if (str.Length > 1)
+            {
+                str = str.Remove(1, str.Length - 1);
+            }
+            int i = int.Parse(str);
+            Trace.WriteLine(Settings.N);
+            if(i >= Settings.N)
+            {
+                MessageBox.Show("A megadott indexű csúcs nem létezik!\nA(z) " + (Settings.N - 1) + ". lesz a kiinduló pont.");
+                i = Settings.N - 1;
+            }
+            return i;
         }
 
         private void BFSAlgBtn_Click(object sender, RoutedEventArgs e)
@@ -781,6 +801,12 @@ namespace GraphTheory
             Algorithms alg = new Algorithms();
             alg.DepthFirstSearch();
             ShowAlgorithm(alg.nodeIndices, alg.lineIndices);
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
     }

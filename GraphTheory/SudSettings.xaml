@@ -5,7 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphTheory"
         mc:Ignorable="d"
-           Title="Sudoku beállítások" Height="450" Width="600" ResizeMode="NoResize" WindowStyle="None">
+        Title="Sudoku beállítások"
+        Height="450"
+        Width="600"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Closing="close">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>

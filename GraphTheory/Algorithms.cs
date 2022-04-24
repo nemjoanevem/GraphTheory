@@ -114,16 +114,16 @@ namespace GraphTheory
         //distV megadja az összes csúcshoz az eljutási költséget
         //prevV megadja az összes csúcsnál, hogy mi az előtte álló csúcs
 
-        public int[] DijkstraAlgorithm(int s = 0, int t = 8)
+        public int[] DijkstraAlgorithm(int s = 0)
         {
             int[] distV = new int[Settings.N];
-            int[] prevV = new int[Settings.N];
+            // int[] prevV = new int[Settings.N];
             int u;
             List<int> Q = new List<int>();
             for (int i = 0; i < Settings.N; i++)
             {
                 distV[i] = int.MaxValue;
-                prevV[i] = 0;
+                //prevV[i] = 0;
                 Q.Add(i);
             }
             distV[s] = 0;
@@ -139,14 +139,10 @@ namespace GraphTheory
                         if(alt < distV[i])
                         {
                             distV[i] = alt;
-                            prevV[i] = u;
+                            //prevV[i] = u;
                         }
                     }
                 }
-            }
-            foreach(int i in prevV)
-            {
-                Trace.WriteLine("prev: " + i);
             }
             foreach(int i in distV)
             {
